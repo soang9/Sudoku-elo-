@@ -1,0 +1,54 @@
+name: Compiler l'APK
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Clé de signature
+        env:
+          SIGNING_KEYSTORE_B64: ${{ secrets.SIGNING_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$SIGNING_KEYSTORE_B64" ]; then
+            mkdir -p app/keystore
+            echo "$SIGNING_KEYSTORE_B64" | base64 -d > app/keystore/sudoku-elo.jks
+            echo "Clé de signature permanente utilisée."
+          else
+            echo "::warning::Secrets de signature absents : APK signée avec une clé de debug temporaire (les mises à jour demanderont de désinstaller)."
+          fi
+
+      - name: Compiler
+        env:
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleRelease
+          cp app/build/outputs/apk/release/app-release.apk sudoku-elo.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sudoku-elo-apk
+          path: sudoku-elo.apk
+
+      - name: Publier une release téléchargeable depuis le téléphone
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Sudoku Elo 1.0.${{ github.run_number }}
+          files: sudoku-elo.apk

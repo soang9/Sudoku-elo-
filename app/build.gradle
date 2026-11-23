@@ -1,0 +1,53 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Sur GitHub Actions, chaque compilation reçoit un numéro de version croissant :
+// la nouvelle APK s'installe par-dessus l'ancienne sans perdre ton Elo.
+def buildNumber = (System.getenv("GITHUB_RUN_NUMBER") ?: "1").toInteger()
+
+android {
+    namespace 'com.sogo.sudokuelo'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.sogo.sudokuelo'
+        minSdk 24
+        targetSdk 35
+        versionCode buildNumber
+        versionName "1.0." + buildNumber
+    }
+
+    // Signature : la clé vient des secrets GitHub (SIGNING_KEYSTORE_B64 + SIGNING_PASSWORD),
+    // décodée par le workflow dans app/keystore/. Sans clé, l'APK est signée avec une clé de debug.
+    def ksFile = file('keystore/sudoku-elo.jks')
+    def ksPass = System.getenv("SIGNING_PASSWORD") ?: ""
+    signingConfigs {
+        sudoku {
+            storeFile ksFile
+            storePassword ksPass
+            keyAlias 'sudokuelo'
+            keyPassword ksPass
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig ksFile.exists() ? signingConfigs.sudoku : signingConfigs.debug
+        }
+        debug {
+            if (ksFile.exists()) signingConfig signingConfigs.sudoku
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
