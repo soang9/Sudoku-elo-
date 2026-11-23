@@ -19,8 +19,6 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - uses: android-actions/setup-android@v3
-
       - name: Clé de signature
         env:
           SIGNING_KEYSTORE_B64: ${{ secrets.SIGNING_KEYSTORE_B64 }}
@@ -33,10 +31,11 @@ jobs:
             echo "::warning::Secrets de signature absents : APK signée avec une clé de debug temporaire (les mises à jour demanderont de désinstaller)."
           fi
 
-      - name: Compiler
+      - name: Compiler (SDK Android préinstallé sur le runner)
         env:
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
         run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
           chmod +x gradlew
           ./gradlew --no-daemon assembleRelease
           cp app/build/outputs/apk/release/app-release.apk sudoku-elo.apk
