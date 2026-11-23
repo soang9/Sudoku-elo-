@@ -1,6 +1,9 @@
 # Sudoku Elo — appli Android
 
-Sudoku hors ligne avec classement Elo, 5 difficultés et analyse de partie.
+Plateforme de sudoku hors ligne inspirée de chess.com : défis du jour (problème + grille, identiques pour tous),
+série de jours, missions et XP, duels contre 7 bots, problèmes classés, Rush de 3 minutes, leçons de techniques,
+badges et bilan de partie (précision, coups Brillant / Excellent / Imprécision / Gaffe). Classements Elo séparés :
+solo, duel et problèmes.
 Le jeu tourne dans une WebView à partir de `app/src/main/assets/index.html`.
 Ton Elo, ton historique et la partie en cours sont stockés dans le stockage privé de l'appli.
 

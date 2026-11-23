@@ -295,40 +295,166 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
 .empty { color: var(--muted); padding: 14px 0; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 @media (max-height: 640px) { .key { padding: 5px 0 4px; } .key .d { font-size: 22px; } .tool { padding: 3px 0; } }
+
+/* ---------- platform additions ---------- */
+:root { --brill: #148F8A; --exc: #2E8B3A; --okc: #6B9A3A; --tabh: 62px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --brill: #3FD0C8; --exc: #5CCB6B; --okc: #A5CF6B; } }
+:root[data-theme="dark"] { --brill: #3FD0C8; --exc: #5CCB6B; --okc: #A5CF6B; }
+body.has-tabs .screen { padding-bottom: calc(var(--tabh) + 24px + env(safe-area-inset-bottom)); }
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 15; background: var(--surface);
+  border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(5, 1fr);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tabbar[hidden] { display: none; }
+.tabbar button { border: 0; background: transparent; height: var(--tabh); display: grid; justify-items: center; align-content: center; gap: 3px; font: 500 11px var(--f-body); color: var(--muted); }
+.tabbar svg { width: 23px; height: 23px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tabbar button[aria-current="page"] { color: var(--accent); }
+.tabbar button[aria-current="page"] svg { stroke-width: 2.2; }
+
+.topline { display: flex; align-items: center; gap: 10px; min-height: 48px; }
+.wordmark { font: 800 24px/1 var(--f-display); letter-spacing: -.02em; flex: 1; }
+.wordmark em { font-style: normal; color: var(--accent); }
+.chip { display: inline-flex; align-items: center; gap: 5px; font: 600 13px var(--f-mono); padding: 6px 9px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+.chip svg { width: 15px; height: 15px; }
+.flame { fill: var(--warn); }
+.flame.off { fill: var(--line); }
+
+.card { background: var(--surface); border-radius: 16px; padding: 14px; display: grid; gap: 10px; border: 1px solid var(--line); }
+.card-h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.card-h h2 { font: 700 19px/1.15 var(--f-display); }
+.stack-v { display: grid; gap: 12px; margin-top: 8px; }
+.daily { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.dtile { border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: var(--paper); text-align: left; display: grid; gap: 4px; position: relative; min-height: 112px; align-content: start; }
+.dtile .k { font: 500 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.dtile .t { font: 700 18px/1.15 var(--f-display); }
+.dtile .s { font: 12px var(--f-mono); color: var(--muted); }
+.dtile .st { position: absolute; top: 10px; right: 10px; font: 600 11px var(--f-mono); padding: 3px 6px; border-radius: 5px; background: var(--accent); color: #fff; }
+.dtile .st.done { background: var(--good); }
+.dtile .st.fail { background: var(--bad); }
+.week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
+.week div { display: grid; gap: 4px; justify-items: center; font: 11px var(--f-mono); color: var(--muted); }
+.week i { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; font-style: normal; font-size: 12px; color: #fff; }
+.week i.on { background: var(--warn); border-color: var(--warn); }
+.week i.today { border-color: var(--ink); }
+.mission { display: grid; grid-template-columns: 1fr auto; gap: 6px 10px; align-items: center; }
+.mission .n { font-size: 14px; }
+.mission .x { font: 600 12px var(--f-mono); color: var(--muted); }
+.mission.done .n { color: var(--muted); text-decoration: line-through; }
+.mission.done .x { color: var(--good); }
+.pbar { grid-column: 1 / -1; height: 6px; background: var(--peer); border-radius: 3px; overflow: hidden; min-height: 0; display: block; }
+.pbar b { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+.mission.done .pbar b { background: var(--good); }
+.quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.qbtn { border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 14px 8px; display: grid; justify-items: center; gap: 6px; font-weight: 600; font-size: 14px; }
+.qbtn svg { width: 26px; height: 26px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.ratings { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 2px solid var(--ink); }
+.rcell { padding: 10px 6px 4px 0; display: grid; gap: 2px; }
+.rcell + .rcell { padding-left: 8px; border-left: 1px solid var(--line); }
+.rcell .k { font: 10px var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.rcell .v { font: 700 22px/1.1 var(--f-display); font-variant-numeric: tabular-nums; }
+.page-h { padding: 6px 0 4px; display: grid; gap: 4px; }
+.page-h h1 { font: 800 34px/1.05 var(--f-display); letter-spacing: -.02em; }
+.bigrate { font: 800 64px/0.95 var(--f-display); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.bots { display: grid; border-top: 1px solid var(--line); }
+.bot { display: grid; grid-template-columns: 48px 1fr auto; gap: 12px; align-items: center; padding: 12px 2px; border: 0; border-bottom: 1px solid var(--line); background: transparent; text-align: left; width: 100%; }
+.avatar { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; font: 800 20px var(--f-display); color: #fff; }
+.avatar.sm { width: 34px; height: 34px; border-radius: 9px; font-size: 15px; }
+.bot .nm { font-weight: 600; }
+.bot .tg { font-size: 13px; color: var(--muted); }
+.bot .rt { font: 600 15px var(--f-mono); text-align: right; }
+.bot .rt small { display: block; font-weight: 400; font-size: 11px; color: var(--muted); }
+.results { display: flex; gap: 4px; flex-wrap: wrap; }
+.results i { width: 14px; height: 14px; border-radius: 3px; background: var(--good); }
+.results i.ko { background: var(--bad); }
+.opp { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; }
+.opp .nm { font: 600 14px var(--f-body); }
+.opp .pr { font: 12px var(--f-mono); color: var(--muted); }
+.duelbars { display: grid; gap: 4px; }
+.duelbars .pbar { height: 7px; }
+.duelbars .pbar.me b { background: var(--accent); }
+.duelbars .pbar.them b { background: var(--warn); }
+.opp[hidden] { display: none; }
+.badges { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.bdg { display: grid; justify-items: center; gap: 4px; text-align: center; font-size: 11px; line-height: 1.25; color: var(--muted); }
+.bdg svg { width: 46px; height: 46px; }
+.bdg.on { color: var(--ink); }
+.heat { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.heat i { aspect-ratio: 1; border-radius: 4px; background: var(--peer); display: block; }
+.heat i.l1 { background: color-mix(in srgb, var(--warn) 45%, var(--peer)); }
+.heat i.l2 { background: var(--warn); }
+.heat i.fut { background: transparent; }
+.lessons { display: grid; gap: 10px; }
+.lesson { border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 14px; text-align: left; display: grid; grid-template-columns: 40px 1fr auto; gap: 12px; align-items: center; }
+.lesson .no { font: 800 26px var(--f-display); color: var(--accent); }
+.lesson .t { font-weight: 600; }
+.lesson .s { font-size: 13px; color: var(--muted); }
+.prose { display: grid; gap: 10px; font-size: 15px; }
+.prose p { margin: 0; max-width: 62ch; }
+.taskline { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 14px; }
+.switch { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 10px; font: 600 12px var(--f-mono); }
+.switch[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.feedback { border-radius: 14px; padding: 12px 14px; display: grid; gap: 8px; border: 1px solid var(--line); background: var(--surface); }
+.feedback[hidden] { display: none; }
+.feedback.ok { border-color: var(--good); }
+.feedback.ko { border-color: var(--bad); }
+.feedback .h { font: 700 18px var(--f-display); display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.feedback ol { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; }
+.feedback .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cell.ans { box-shadow: inset 0 0 0 3px var(--good); }
+.cell.elim { box-shadow: inset 0 0 0 2px var(--violet); }
+.cell.okflash { background: color-mix(in srgb, var(--good) 30%, transparent); }
+.cell.koflash { background: color-mix(in srgb, var(--bad) 30%, transparent); }
+.notes span.x { color: var(--bad); text-decoration: line-through; }
+.rushtop { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+.rushtop .score { font: 800 40px/1 var(--f-display); text-align: center; font-variant-numeric: tabular-nums; }
+.rushtop .clock { font: 600 20px var(--f-mono); font-variant-numeric: tabular-nums; }
+.rushtop .clock.low { color: var(--bad); }
+.rushtop .strikes { text-align: right; font: 600 18px var(--f-mono); letter-spacing: .15em; color: var(--line); }
+.rushtop .strikes .hit { color: var(--bad); }
+.acc { display: flex; align-items: baseline; gap: 12px; }
+.acc .v { font: 800 56px/1 var(--f-display); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.coach { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: start; }
+.coach .bubble { background: var(--surface); border: 1px solid var(--line); border-radius: 4px 14px 14px 14px; padding: 10px 12px; font-size: 14px; }
+.cls-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.cls-table td { padding: 7px 4px; border-bottom: 1px solid var(--line); }
+.cls-table td.r { text-align: right; font: 600 14px var(--f-mono); }
+.sym { display: inline-grid; place-items: center; min-width: 26px; height: 20px; padding: 0 4px; border-radius: 5px; color: #fff; font: 700 11px var(--f-mono); margin-right: 8px; }
+.c-brilliant { background: var(--brill); fill: var(--brill); } .t-brilliant { color: var(--brill); }
+.c-excellent { background: var(--exc); fill: var(--exc); } .t-excellent { color: var(--exc); }
+.c-good { background: var(--okc); fill: var(--okc); } .t-good { color: var(--okc); }
+.c-inacc { background: var(--warn); fill: var(--warn); } .t-inacc { color: var(--warn); }
+.c-blunder { background: var(--bad); fill: var(--bad); } .t-blunder { color: var(--bad); }
+.c-hint { background: var(--hint); fill: var(--hint); } .t-hint { color: var(--hint); }
+.xp { font: 12px var(--f-mono); color: var(--muted); }
+.unlock { display: flex; gap: 10px; align-items: center; background: var(--peer); border-radius: 12px; padding: 10px; }
+.unlock svg { width: 40px; height: 40px; flex: none; }
+.bot .rec { font: 600 10px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; border: 1px solid currentColor; padding: 2px 4px; border-radius: 4px; }
+#s-problem, #s-rush { display: flex; flex-direction: column; gap: 10px; }
+#s-problem[hidden], #s-rush[hidden] { display: none; }
+#s-problem .pad, #s-rush .pad { margin-top: auto; }
+.pad[hidden] { display: none; }
 </style>
 </head>
-<body>
+<body class="has-tabs">
 
-<!-- HOME -->
-<main class="screen" id="screen-home" data-screen="home">
-  <div class="bar"><span class="eyebrow grow">Sudoku · classement Elo</span><button class="iconbtn" id="btn-history" aria-label="Historique et statistiques"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></button></div>
-  <section class="hero">
-    <span class="eyebrow">Ton classement</span>
-    <div class="hero-row">
-      <div class="elo-big" id="home-elo">1200</div>
-      <svg class="spark" id="home-spark" viewBox="0 0 120 44" aria-hidden="true"></svg>
-    </div>
-    <div class="rank" id="home-rank">Confirmé</div>
-    <div class="hero-meta" id="home-meta"></div>
-  </section>
-  <div class="seg" role="group" aria-label="Type de partie">
-    <button id="mode-ranked" aria-pressed="true">Classée</button>
-    <button id="mode-free" aria-pressed="false">Libre</button>
-  </div>
-  <p class="seg-note" id="mode-note"></p>
-  <button class="primary resume" id="btn-resume" hidden><span><span class="t">Reprendre la partie</span><span class="s" id="resume-sub"></span></span><span class="arrow">→</span></button>
-  <button class="primary" id="btn-play"><span><span class="t" id="play-t">Jouer</span><span class="s" id="play-s"></span></span><span class="arrow">→</span></button>
-  <div class="section-h"><h2 class="eyebrow">Choisir la difficulté</h2><span class="eyebrow">Gain / perte</span></div>
-  <div class="levels" id="levels"></div>
-  <p class="seg-note" style="margin-top:12px">Gain : grille résolue au temps de référence sans erreur. Perte : 3 erreurs ou abandon.</p>
-</main>
+<main class="screen" id="s-home" data-screen="home"></main>
+<main class="screen" id="s-play" data-screen="play" hidden></main>
+<main class="screen" id="s-puzzles" data-screen="puzzles" hidden></main>
+<main class="screen" id="s-learn" data-screen="learn" hidden></main>
+<main class="screen" id="s-profile" data-screen="profile" hidden></main>
 
-<!-- GAME -->
+<!-- GAME (solo, duel, grille du jour) -->
 <main class="screen" id="screen-game" data-screen="game" hidden>
   <div class="bar">
-    <button class="iconbtn" id="g-back" aria-label="Retour à l'accueil"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
-    <div class="grow"><div class="gtitle" id="g-title">Difficile</div><div class="gsub" id="g-sub">Classée · 1342</div></div>
+    <button class="iconbtn" id="g-back" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div class="grow"><div class="gtitle" id="g-title"></div><div class="gsub" id="g-sub"></div></div>
     <button class="iconbtn" id="g-pause" aria-label="Pause"><svg viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"/></svg></button>
+  </div>
+  <div class="opp" id="g-opp" hidden>
+    <div class="avatar sm" id="opp-av"></div>
+    <div class="duelbars"><div class="pr" id="opp-txt"></div><span class="pbar them"><b id="opp-bar"></b></span><span class="pbar me"><b id="me-bar"></b></span></div>
+    <div class="pr" id="me-txt"></div>
   </div>
   <div class="stats"><span>Erreurs <span class="x" id="g-x"></span></span><span class="timer" id="g-time">00:00</span><span>Indices <b id="g-h">0</b></span></div>
   <div class="board-wrap">
@@ -350,20 +476,54 @@ h1, h2, h3 { text-wrap: balance; margin: 0; }
   <div class="pad" id="pad"></div>
 </main>
 
-<!-- ANALYSIS -->
-<main class="screen" id="screen-analysis" data-screen="analysis" hidden>
-  <div class="bar"><button class="iconbtn" id="a-back" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><span class="eyebrow grow">Analyse de partie</span></div>
+<!-- PROBLEM -->
+<main class="screen" id="s-problem" data-screen="problem" hidden>
+  <div class="bar">
+    <button class="iconbtn" id="p-back" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div class="grow"><div class="gtitle" id="p-title"></div><div class="gsub" id="p-sub"></div></div>
+    <span class="chip num" id="p-rating"></span>
+  </div>
+  <div class="taskline"><span id="p-task">Trouve une case que tu peux remplir avec certitude.</span><button class="switch" id="p-cands" aria-pressed="false">Candidats</button></div>
+  <div class="board-wrap"><div class="board" id="pboard" role="grid" aria-label="Grille du problème"></div></div>
+  <div class="feedback" id="p-feedback" hidden></div>
+  <div class="pad" id="ppad"></div>
+</main>
+
+<!-- RUSH -->
+<main class="screen" id="s-rush" data-screen="rush" hidden>
+  <div class="bar">
+    <button class="iconbtn" id="r-back" aria-label="Quitter le Rush"><svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    <div class="grow"><div class="gtitle">Rush · 3 minutes</div><div class="gsub" id="r-sub">3 erreurs et c'est fini</div></div>
+    <button class="switch" id="r-cands" aria-pressed="false">Candidats</button>
+  </div>
+  <div class="rushtop"><span class="clock" id="r-clock">3:00</span><span class="score" id="r-score">0</span><span class="strikes" id="r-strikes"></span></div>
+  <div class="board-wrap"><div class="board" id="rboard" role="grid" aria-label="Grille du Rush"></div></div>
+  <p class="seg-note" id="r-msg" style="margin:0;text-align:center">Trouve une case certaine, le plus vite possible.</p>
+  <div class="pad" id="rpad"></div>
+</main>
+
+<!-- REVIEW -->
+<main class="screen" id="s-review" data-screen="review" hidden>
+  <div class="bar"><button class="iconbtn" id="a-back" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><span class="eyebrow grow">Bilan de partie</span></div>
   <div id="analysis"></div>
 </main>
 
-<!-- HISTORY -->
-<main class="screen" id="screen-history" data-screen="history" hidden>
-  <div class="bar"><button class="iconbtn" id="h-back" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><span class="eyebrow grow">Historique et statistiques</span></div>
-  <div id="history"></div>
+<!-- LESSON -->
+<main class="screen" id="s-lesson" data-screen="lesson" hidden>
+  <div class="bar"><button class="iconbtn" id="l-back" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><span class="eyebrow grow">Leçon</span></div>
+  <div id="lesson"></div>
 </main>
 
+<nav class="tabbar" id="tabbar" aria-label="Navigation principale">
+  <button data-tab="home" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>Accueil</button>
+  <button data-tab="play"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>Jouer</button>
+  <button data-tab="puzzles"><svg viewBox="0 0 24 24"><path d="M12 2l2.6 6.3L21 9l-5 4.4L17.5 20 12 16.6 6.5 20 8 13.4 3 9l6.4-.7z"/></svg>Problèmes</button>
+  <button data-tab="learn"><svg viewBox="0 0 24 24"><path d="M2 7l10-4 10 4-10 4z"/><path d="M6 9v6c0 1.5 2.7 3 6 3s6-1.5 6-3V9"/></svg>Apprendre</button>
+  <button data-tab="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>Profil</button>
+</nav>
+
 <div class="overlay" id="modal" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
-<div class="overlay loading" id="loading" hidden><div class="sheet"><div class="spinner" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><h2 id="load-t" style="font-size:22px">Génération de la grille…</h2><p id="load-s">Vérification de l'unicité de la solution et notation de la difficulté.</p></div></div>
+<div class="overlay loading" id="loading" hidden><div class="sheet"><div class="spinner" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><h2 id="load-t" style="font-size:22px">Préparation…</h2><p id="load-s">Génération et notation de la grille.</p></div></div>
 <div class="toast" id="toast" hidden></div>
 
 <script>
@@ -396,7 +556,14 @@ var ENGINE = (function () {
     for (let k = 0; k < 9; k++) if (m & (1 << k)) { LOWDIG[m] = k + 1; break; }
   }
   const digitsOf = m => { const a = []; for (let k = 0; k < 9; k++) if (m & (1 << k)) a.push(k + 1); return a; };
-  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
+  let rand = Math.random;
+  function setRng(f) { rand = f || Math.random; }
+  function mulberry32(seed) {
+    let a = seed >>> 0;
+    return function () { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  }
+  function seedFrom(str) { let h = 2166136261 >>> 0; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h; }
+  const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
 
   const TECH = {
     nakedSingle:  { name: 'Singleton nu',          level: 1, cost: 1 },
@@ -784,7 +951,7 @@ var ENGINE = (function () {
   function attempt(level) {
     const p = GEN[level];
     const sol = randomSolution();
-    const floor = p.floor[0] + Math.floor(Math.random() * (p.floor[1] - p.floor[0] + 1));
+    const floor = p.floor[0] + Math.floor(rand() * (p.floor[1] - p.floor[0] + 1));
     const puzzle = makePuzzle(sol, floor, p.sym);
     return { puzzle, solution: sol, grade: grade(puzzle) };
   }
@@ -818,6 +985,79 @@ var ENGINE = (function () {
     setTimeout(tick, 0);
   }
 
+  // Deterministic generation (same grid on every device for a given seed)
+  function generateSeeded(level, seedStr, maxAttempts) {
+    setRng(mulberry32(seedFrom(seedStr)));
+    try {
+      let best = null;
+      for (let n = 0; n < (maxAttempts || 500); n++) {
+        const a = attempt(level);
+        if (a.grade.level === level) return a;
+        if (better(level, a, best)) best = a;
+      }
+      return best;
+    } finally { setRng(null); }
+  }
+
+  // ---------- Problems (one-move puzzles) ----------
+  const TIER_OF = { nakedSingle: 0, hiddenSingle: 0, pointing: 1, boxLine: 1, nakedPair: 2, hiddenPair: 2, nakedTriple: 3, hiddenTriple: 3, xwing: 3, ywing: 4, swordfish: 4, nakedQuad: 4 };
+  const TIER_BASE = [650, 1100, 1300, 1550, 1800];
+  // Walks a fresh puzzle; at each position checks what a solver starting from the bare grid needs.
+  function scanForProblem(tier, sol, puz) {
+    const g = puz.slice(), cand = computeCands(g);
+    const found = [];
+    for (let k = 0; k < 400; k++) {
+      const empties = g.filter(v => !v).length;
+      if (!empties) break;
+      const fresh = computeCands(g);
+      const singles = findSingles(g, fresh, true);
+      if (tier === 0) {
+        if (singles.length >= 1 && singles.length <= 2 && empties >= 30) {
+          const hiddenOnly = singles.every(s => s.t === 'hiddenSingle');
+          found.push({ grid: g.slice(), answers: singles, steps: [], tier: 0,
+            rating: TIER_BASE[0] + (singles.length === 1 ? 120 : 0) + (hiddenOnly ? 80 : 0) + Math.min(120, (empties - 30) * 4) });
+        }
+      } else if (!singles.length) {
+        const c2 = fresh.slice(), steps = [];
+        let ans = [];
+        for (let j = 0; j < 12; j++) {
+          const st = nextElim(c2);
+          if (!st) break;
+          applyStep(g, c2, st); steps.push(st);
+          ans = findSingles(g, c2, true);
+          if (ans.length) break;
+        }
+        if (ans.length && steps.length) {
+          const mt = Math.max(...steps.map(s => TIER_OF[s.t]));
+          if (mt === tier) found.push({ grid: g.slice(), answers: ans, steps, tier,
+            rating: TIER_BASE[tier] + Math.min(160, (steps.length - 1) * 50) + (ans.length === 1 ? 40 : 0) });
+        }
+      }
+      if (found.length >= 3) break;
+      const st = nextStep(g, cand);
+      if (!st) return found;
+      applyStep(g, cand, st);
+    }
+    return found;
+  }
+  function makeProblem(tier, maxTries) {
+    for (let t = 0; t < (maxTries || 80); t++) {
+      const sol = randomSolution();
+      const puz = makePuzzle(sol, tier === 0 ? 24 : 0, tier === 0);
+      const f = scanForProblem(tier, sol, puz);
+      if (f.length) {
+        const p = f[Math.floor(rand() * f.length)];
+        p.solution = sol; p.rating += Math.floor(rand() * 60);
+        return p;
+      }
+    }
+    return null;
+  }
+  function makeProblemSeeded(tier, seedStr) {
+    setRng(mulberry32(seedFrom(seedStr)));
+    try { return makeProblem(tier, 200); } finally { setRng(null); }
+  }
+
   // ---------- Analysis helper ----------
   // How far was `target` from being deducible in this position?
   function reachDepth(grid, target) {
@@ -848,7 +1088,8 @@ var ENGINE = (function () {
     ROW, COL, BOX, UNITS, PEERS, ISPEER, POP, LOWDIG, TECH, LEVELS,
     digitsOf, solveCount, randomSolution, makePuzzle, computeCands, placeVal,
     findSingles, nextStep, nextElim, applyStep, isPlacement, solveLogic, grade,
-    attempt, generate, generateAsync, reachDepth
+    attempt, generate, generateAsync, reachDepth,
+    setRng, mulberry32, seedFrom, generateSeeded, makeProblem, makeProblemSeeded, TIER_OF, TIER_BASE
   };
 })();
 
@@ -865,769 +1106,1069 @@ if (typeof window === 'undefined' && typeof self !== 'undefined' && typeof impor
   'use strict';
   const E = ENGINE, LV = E.LEVELS;
   const $ = s => document.querySelector(s);
-  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 
-  // ---------- storage ----------
+  // ================= storage & profile =================
   const store = {
     get(k, d) { try { const v = localStorage.getItem('sudokuElo.' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
     set(k, v) { try { localStorage.setItem('sudokuElo.' + k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
   };
-  const newProfile = () => ({ elo: 1200, peak: 1200, rankedGames: 0, history: [] });
-  let profile = store.get('profile', null) || newProfile();
+  const newRating = r => ({ r, n: 0, peak: r, hist: [] });
+  function newProfile() {
+    return {
+      v: 2, r: { solo: newRating(1200), duel: newRating(1200), puzzle: newRating(1000) },
+      rushBest: 0, history: [], puzzleLog: [], daily: {}, streak: { cur: 0, best: 0, last: '' },
+      missions: null, xp: 0, badges: {},
+      stats: { wins: 0, losses: 0, diabWins: 0, beat: {}, flawlessExpert: 0, fastWins: 0, puzzlesSolved: 0, puzzlesFailed: 0, duelsWon: 0, duelsLost: 0 }
+    };
+  }
+  function migrate(p) {
+    if (!p) return newProfile();
+    if (p.v === 2) return p;
+    const n = newProfile();           // v1 : un seul Elo solo
+    n.r.solo = { r: p.elo || 1200, n: p.rankedGames || 0, peak: p.peak || p.elo || 1200, hist: (p.history || []).filter(g => g.ranked).map(g => g.eloAfter) };
+    n.history = (p.history || []).map(g => Object.assign({ mode: g.ranked ? 'solo' : 'free' }, g, { before: g.eloBefore, after: g.eloAfter }));
+    n.stats.wins = n.history.filter(g => g.won).length;
+    n.stats.losses = n.history.length - n.stats.wins;
+    return n;
+  }
+  let profile = migrate(store.get('profile', null));
   let games = store.get('games', {});
   let cur = store.get('current', null);
+  if (cur && !cur.mode) cur.mode = cur.ranked ? 'solo' : 'free';
   let ranked = store.get('ranked', true);
-  let screen = 'home';
-  let paused = false;
-
   const saveProfile = () => { store.set('profile', profile); store.set('games', games); };
   const saveCur = () => store.set('current', cur);
-
   if (window.claude && window.claude.hot && window.claude.hot.snapshot) {
     try { window.claude.hot.snapshot(() => ({ cur, profile, games, ranked })); } catch (e) { /* ignore */ }
   }
 
-  // ---------- helpers ----------
+  // ================= helpers =================
   const fmt = s => { s = Math.max(0, Math.round(s)); const m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; };
   const fmtLong = s => { s = Math.round(s); if (s < 60) return s + ' s'; const m = Math.floor(s / 60), r = s % 60; return m + ' min' + (r ? ' ' + (r < 10 ? '0' : '') + r : ''); };
   const cellName = i => 'L' + (E.ROW[i] + 1) + 'C' + (E.COL[i] + 1);
   const unitName = u => u < 9 ? 'la ligne ' + (u + 1) : u < 18 ? 'la colonne ' + (u - 8) : 'le bloc ' + (u - 17);
   const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  const plural = (n, w) => n + ' ' + w + (n > 1 ? 's' : '');
   const rankTitle = e => e < 800 ? 'Débutant' : e < 1100 ? 'Apprenti' : e < 1400 ? 'Confirmé' : e < 1700 ? 'Expert' : e < 2000 ? 'Maître' : 'Grand maître';
   const recommended = e => { for (let i = LV.length - 1; i >= 0; i--) if (e >= LV[i].base) return i; return 0; };
-  const expected = (player, puzzle) => 1 / (1 + Math.pow(10, (puzzle - player) / 400));
-  const kFactor = () => profile.rankedGames < 10 ? 40 : profile.elo >= 2000 ? 16 : 24;
-  function perfParts(won, time, par, mistakes, hints) {
-    const ratio = time / par;
-    const timeF = clamp(1.3 - 0.4 * ratio, 0.6, 1);
-    const base = 1 - 0.12 * mistakes - 0.15 * hints;
-    const S = won ? clamp(base * timeF, 0.3, 1) : 0;
-    return { ratio, timeF, base, S };
-  }
-  const dateStr = t => new Date(t).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+  const expected = (player, opp) => 1 / (1 + Math.pow(10, (opp - player) / 400));
   const toArr = s => s.split('').map(Number);
+  const dateStr = t => new Date(t).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+  const signed = d => (d > 0 ? '+' : '') + d;
+  const dcls = d => d > 0 ? 'up' : d < 0 ? 'down' : 'muted';
+  function dayKey(d) { d = d || new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function shiftDay(key, n) { const [y, m, d] = key.split('-').map(Number); return dayKey(new Date(y, m - 1, d + n)); }
+  const today = () => dayKey();
+  const DAY_LEVEL = [4, 0, 1, 1, 2, 2, 3];   // dimanche → samedi
+  const DAY_TIER = [3, 0, 1, 1, 2, 2, 3];
+  const TIER_NAMES = ['Singletons', 'Pointantes et réductions', 'Paires', 'Triplets et X-Wing', 'Y-Wing et Swordfish'];
+  const techName = t => E.TECH[t] ? E.TECH[t].name : t;
+  function pushRating(key, delta) {
+    const R = profile.r[key];
+    R.r = Math.max(100, R.r + delta); R.n++; R.peak = Math.max(R.peak, R.r);
+    R.hist.push(R.r); if (R.hist.length > 200) R.hist.shift();
+    return R.r;
+  }
+  function perfParts(won, time, par, mistakes, hints) {
+    const ratio = time / par, timeF = clamp(1.3 - 0.4 * ratio, 0.6, 1), base = 1 - 0.12 * mistakes - 0.15 * hints;
+    return { ratio, timeF, base, S: won ? clamp(base * timeF, 0.3, 1) : 0 };
+  }
 
   let toastTimer = 0;
-  function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 2200); }
-
-  function show(name) {
-    screen = name;
-    document.querySelectorAll('.screen').forEach(s => { s.hidden = s.dataset.screen !== name; });
-    window.scrollTo(0, 0);
-  }
-
-  // ---------- modal ----------
+  function toast(msg, ms) { const t = $('#toast'); t.innerHTML = msg; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, ms || 2400); }
   function modal(html, actions) {
     const ov = $('#modal'), sh = $('#sheet');
     sh.innerHTML = html; ov.hidden = false;
-    sh.querySelectorAll('[data-act]').forEach(b => b.addEventListener('click', () => {
-      const f = actions[b.dataset.act]; closeModal(); if (f) f();
-    }));
+    sh.querySelectorAll('[data-act]').forEach(b => b.addEventListener('click', () => { const f = actions && actions[b.dataset.act]; closeModal(); if (f) f(); }));
     const first = sh.querySelector('button'); if (first) first.focus();
   }
-  function closeModal() { $('#modal').hidden = true; }
+  const closeModal = () => { $('#modal').hidden = true; };
+  function loading(on, title) { $('#loading').hidden = !on; if (title) $('#load-t').textContent = title; }
+  function later(fn) { requestAnimationFrame(() => setTimeout(fn, 30)); }
 
-  // ---------- HOME ----------
-  function sparkPath(vals, w, h, pad) {
-    if (vals.length < 2) return null;
-    const mn = Math.min(...vals), mx = Math.max(...vals), rg = Math.max(20, mx - mn);
-    const pts = vals.map((v, k) => [pad + k * (w - 2 * pad) / (vals.length - 1), h - pad - (v - mn) / rg * (h - 2 * pad)]);
-    return pts;
+  // ================= navigation =================
+  const TABS = ['home', 'play', 'puzzles', 'learn', 'profile'];
+  let screen = 'home', tab = 'home';
+  const RENDER = {};
+  function show(name) {
+    screen = name;
+    if (TABS.indexOf(name) >= 0) tab = name;
+    document.querySelectorAll('.screen').forEach(s => { s.hidden = s.dataset.screen !== name; });
+    const isTab = TABS.indexOf(name) >= 0;
+    $('#tabbar').hidden = !isTab;
+    document.body.classList.toggle('has-tabs', isTab);
+    document.querySelectorAll('#tabbar button').forEach(b => b.setAttribute('aria-current', b.dataset.tab === tab && isTab ? 'page' : 'false'));
+    window.scrollTo(0, 0);
   }
-  function renderHome() {
-    $('#home-elo').textContent = profile.elo;
-    const prov = profile.rankedGames < 10 ? ' <span class="prov">· provisoire ' + profile.rankedGames + '/10</span>' : '';
-    $('#home-rank').innerHTML = esc(rankTitle(profile.elo)) + prov;
-    const h = profile.history, wins = h.filter(g => g.won).length;
-    let streak = 0; for (let k = h.length - 1; k >= 0 && h[k].won; k--) streak++;
-    $('#home-meta').innerHTML = '<span>Record <b>' + profile.peak + '</b></span><span>Parties <b>' + h.length + '</b></span><span>Victoires <b>' + (h.length ? Math.round(100 * wins / h.length) : 0) + ' %</b></span>' + (streak > 1 ? '<span>Série <b>' + streak + '</b></span>' : '');
-    const vals = [1200].concat(h.filter(g => g.ranked).map(g => g.eloAfter)).slice(-20);
-    const pts = sparkPath(vals, 120, 44, 4), sp = $('#home-spark');
-    if (pts) {
-      const d = pts.map((p, k) => (k ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('');
-      const last = pts[pts.length - 1];
-      sp.innerHTML = '<path d="' + d + 'L' + last[0].toFixed(1) + ' 44L4 44Z" fill="var(--accent-soft)"/><path d="' + d + '" fill="none" stroke="var(--accent)" stroke-width="1.8"/><circle cx="' + last[0] + '" cy="' + last[1] + '" r="3" fill="var(--accent)"/>';
-    } else sp.innerHTML = '';
+  function goTab(t) { closeModal(); if (RENDER[t]) RENDER[t](); show(t); }
 
-    $('#mode-ranked').setAttribute('aria-pressed', String(ranked));
-    $('#mode-free').setAttribute('aria-pressed', String(!ranked));
-    $('#mode-note').textContent = ranked ? 'Chaque partie modifie ton Elo selon la difficulté de la grille, ton temps, tes erreurs et tes indices.' : 'Entraînement libre : la partie est analysée mais ton Elo ne bouge pas.';
-
-    const rec = recommended(profile.elo);
-    $('#play-t').textContent = 'Jouer · ' + LV[rec].name;
-    $('#play-s').textContent = 'Niveau adapté à ' + profile.elo + ' Elo';
-
-    const rb = $('#btn-resume');
-    if (cur && !cur.finished) {
-      rb.hidden = false;
-      $('#resume-sub').textContent = LV[cur.level].name + ' · ' + fmt(cur.elapsed / 1000) + ' · ' + cur.board.filter((v, i) => v && v === +cur.solution[i]).length + '/81 cases';
-    } else rb.hidden = true;
-
-    const box = $('#levels'); box.innerHTML = '';
-    LV.forEach((L, k) => {
-      const mid = L.base + L.span / 2;
-      const Ex = expected(profile.elo, mid), K = kFactor();
-      const up = Math.round(K * (0.9 - Ex)) || 0, down = Math.round(K * (0 - Ex)) || 0;
-      const played = h.filter(g => g.level === k), won = played.filter(g => g.won);
-      const best = won.length ? Math.min(...won.map(g => g.time)) : null;
-      const b = document.createElement('button');
-      b.className = 'lvl';
-      b.innerHTML = '<span class="pips">' + [0, 1, 2, 3, 4].map(j => '<i class="' + (j <= k ? 'on' : '') + '" style="height:' + (6 + j * 3) + 'px"></i>').join('') + '</span>' +
-        '<span><span class="name">' + L.name + (k === rec ? ' <span class="rec">Adapté</span>' : '') + '</span>' +
-        '<span class="sub">' + L.base + '–' + (L.base + L.span) + ' · réf. ' + Math.round(L.par / 60) + ' min' + (played.length ? ' · ' + won.length + '/' + played.length + (best ? ' · ⏱ ' + fmt(best) : '') : '') + '</span></span>' +
-        '<span class="stake num">' + (ranked ? '<span class="' + (up >= 0 ? 'up' : 'down') + '">' + (up >= 0 ? '+' : '') + up + '</span><br><span class="down">' + down + '</span>' : '<span class="muted">libre</span>') + '</span>';
-      b.addEventListener('click', () => requestGame(k));
-      box.appendChild(b);
-    });
-  }
-
-  function requestGame(level) {
-    if (cur && !cur.finished && cur.moves.length) {
-      modal('<h2>Partie en cours</h2><p>Une partie ' + LV[cur.level].name + ' est en cours. En lancer une nouvelle compte comme un abandon' + (cur.ranked ? ' et te fait perdre des points Elo.' : '.') + '</p><div class="btns"><button class="btn dark" data-act="resume">Reprendre la partie en cours</button><button class="btn danger" data-act="new">Abandonner et jouer ' + LV[level].name + '</button><button class="btn" data-act="no">Annuler</button></div>',
-        { resume: () => openGame(), new: () => { endGame(false, true); startGame(level); } });
-      return;
-    }
-    startGame(level);
-  }
-
-  function startGame(level) {
-    closeModal();
-    $('#load-t').textContent = 'Grille ' + LV[level].name + ' en préparation…';
-    $('#loading').hidden = false;
-    E.generateAsync(level, res => {
-      $('#loading').hidden = true;
-      const gl = res.grade.level;
-      cur = {
-        id: 'g' + Date.now().toString(36),
-        level: gl, asked: level, rating: res.grade.rating, grade: res.grade, ranked,
-        puzzle: res.puzzle.join(''), solution: res.solution.join(''),
-        board: res.puzzle.slice(), notes: new Array(81).fill(0),
-        mistakes: 0, hints: 0, elapsed: 0, moves: [], undo: [], notesMode: false, selected: -1, finished: false, startedAt: Date.now()
-      };
-      saveCur();
-      openGame();
-      if (gl !== level) toast('Grille notée ' + LV[gl].name + ' après vérification');
-    });
-  }
-
-  // ---------- GAME ----------
-  const cells = [];
-  function buildBoard() {
-    const b = $('#board');
+  // ================= board renderer =================
+  function makeBoard(el, onCell) {
+    const cells = [];
     for (let i = 0; i < 81; i++) {
       const c = document.createElement('button');
       c.className = 'cell'; c.setAttribute('role', 'gridcell'); c.tabIndex = -1;
-      c.setAttribute('aria-label', cellName(i));
-      c.addEventListener('click', () => select(i));
-      b.appendChild(c); cells.push(c);
+      c.addEventListener('click', () => onCell(i));
+      el.appendChild(c); cells.push(c);
     }
-    const pad = $('#pad');
+    return cells;
+  }
+  // m: { val, given, wrong, notes, strike, sel, hl }
+  function paint(cells, m) {
+    const s = m.sel, sv = s >= 0 ? m.val[s] : 0;
+    for (let i = 0; i < 81; i++) {
+      const c = cells[i], v = m.val[i];
+      let cls = 'cell';
+      if (m.given[i]) cls += ' given'; else if (m.wrong && m.wrong[i]) cls += ' wrong'; else if (v) cls += ' user';
+      if (i === s) cls += ' sel';
+      else if (sv && v === sv) cls += ' same';
+      else if (s >= 0 && E.ISPEER[s * 81 + i]) cls += ' peer';
+      if (m.hl && m.hl[i]) cls += ' ' + m.hl[i];
+      if (c.classList.contains('flash')) cls += ' flash';
+      c.className = cls;
+      const n = m.notes ? m.notes[i] : 0, x = m.strike ? m.strike[i] : 0;
+      if (v) { c.innerHTML = '<span>' + v + '</span>'; c.setAttribute('aria-label', cellName(i) + ' : ' + v); }
+      else if (n || x) {
+        let h = '<span class="notes">';
+        for (let d = 1; d <= 9; d++) {
+          const b = 1 << (d - 1);
+          const k = (x & b) ? 'x' : (sv === d && (n & b)) ? 'm' : '';
+          h += '<span class="' + k + '">' + ((n & b) || (x & b) ? d : '') + '</span>';
+        }
+        c.innerHTML = h + '</span>'; c.setAttribute('aria-label', cellName(i) + ' : candidats ' + E.digitsOf(n).join(' '));
+      } else { c.innerHTML = ''; c.setAttribute('aria-label', cellName(i) + ' : vide'); }
+    }
+  }
+  function makePad(el, onDigit) {
+    const keys = [];
     for (let d = 1; d <= 9; d++) {
       const k = document.createElement('button');
       k.className = 'key'; k.dataset.d = d; k.setAttribute('aria-label', 'Chiffre ' + d);
       k.innerHTML = '<span class="d">' + d + '</span><span class="r"></span>';
-      k.addEventListener('click', () => inputDigit(d));
-      pad.appendChild(k);
+      k.addEventListener('click', () => onDigit(d));
+      el.appendChild(k); keys.push(k);
     }
+    return keys;
   }
+  function padCounts(keys, val) {
+    const counts = new Array(10).fill(0);
+    val.forEach(v => { if (v) counts[v]++; });
+    keys.forEach((k, j) => { const left = 9 - counts[j + 1]; k.disabled = left <= 0; k.querySelector('.r').textContent = left > 0 ? left : ''; });
+  }
+  function flashCells(cells, list) {
+    requestAnimationFrame(() => list.forEach(j => {
+      const c = cells[j]; c.classList.remove('flash'); void c.offsetWidth; c.classList.add('flash');
+      setTimeout(() => c.classList.remove('flash'), 650);
+    }));
+  }
+
+  // ================= icons =================
+  const ICON = {
+    flame: on => '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="flame' + (on ? '' : ' off') + '" d="M12 2c1 4 5 5.5 5 11a5 5 0 01-10 0c0-2.5 1.2-4 2.5-5 0 2 1 3 2 3 0-3-1-6 .5-9z"/></svg>',
+    duel: '<svg viewBox="0 0 24 24"><path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2"/><path d="M9.5 17.5L21 6V3h-3L6.5 14.5M11 19l-6-6M8 16l-4 4M5 21l-2-2"/></svg>',
+    puzzle: '<svg viewBox="0 0 24 24"><path d="M12 2l2.6 6.3L21 9l-5 4.4L17.5 20 12 16.6 6.5 20 8 13.4 3 9l6.4-.7z"/></svg>',
+    rush: '<svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>',
+    grid: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>'
+  };
+  function hexBadge(sym, color, on) {
+    return '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3l18 10.5v21L24 45 6 34.5v-21z" fill="' + (on ? color : 'var(--peer)') + '" stroke="' + (on ? 'none' : 'var(--line)') + '" stroke-width="1.5"/><text x="24" y="29.5" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-weight="800" font-size="15" fill="' + (on ? '#fff' : 'var(--muted)') + '">' + sym + '</text></svg>';
+  }
+
+  // ================= bots =================
+  const BOTS = [
+    { id: 'lea', name: 'Léa', ini: 'L', rating: 650, color: '#D9714F', tag: 'Débute et prend son temps' },
+    { id: 'hugo', name: 'Hugo', ini: 'H', rating: 950, color: '#2F8F68', tag: 'Régulier, se trompe rarement' },
+    { id: 'ines', name: 'Inès', ini: 'I', rating: 1250, color: '#7553C0', tag: 'Repère les singletons en un clin d\'œil' },
+    { id: 'karim', name: 'Karim', ini: 'K', rating: 1550, color: '#B8860B', tag: 'Connaît toutes les paires' },
+    { id: 'nora', name: 'Nora', ini: 'N', rating: 1850, color: '#2B6CB0', tag: 'Joueuse de tournoi' },
+    { id: 'prof', name: 'Le Professeur', ini: 'P', rating: 2150, color: '#2A3442', tag: 'Un X-Wing au petit-déjeuner' },
+    { id: 'oracle', name: 'Oracle', ini: 'O', rating: 2450, color: '#A8324A', tag: 'Ne s\'est jamais trompé' }
+  ];
+  const botById = id => BOTS.find(b => b.id === id);
+  function botProgress(g) {
+    const x = g.elapsed / 1000 / g.bot.time;
+    const f = x >= 1 ? 1 : 0.35 * x * x + 0.65 * x;
+    return Math.min(g.bot.empties, Math.floor(g.bot.empties * f));
+  }
+
+  // ================= missions, XP, badges, streak =================
+  const MISSIONS = [
+    { id: 'daily_puzzle', t: 'Résous le problème du jour', goal: 1, xp: 20 },
+    { id: 'daily_grid', t: 'Termine la grille du jour', goal: 1, xp: 30 },
+    { id: 'puzzles5', t: 'Résous 5 problèmes', goal: 5, xp: 30 },
+    { id: 'duel_win', t: 'Gagne un duel', goal: 1, xp: 40 },
+    { id: 'rush8', t: 'Marque 8 points en Rush', goal: 8, xp: 30 },
+    { id: 'clean', t: 'Termine une grille sans erreur', goal: 1, xp: 30 },
+    { id: 'hard', t: 'Termine une grille Difficile ou plus dure', goal: 1, xp: 40 },
+    { id: 'nohint', t: 'Gagne une partie sans indice', goal: 1, xp: 25 }
+  ];
+  function missionsToday() {
+    const k = today();
+    if (!profile.missions || profile.missions.day !== k) {
+      const rng = E.mulberry32(E.seedFrom('missions-' + k));
+      const pool = MISSIONS.slice(), pick = [];
+      while (pick.length < 3) pick.push(pool.splice(Math.floor(rng() * pool.length), 1)[0]);
+      profile.missions = { day: k, list: pick.map(m => ({ id: m.id, prog: 0, done: false })) };
+    }
+    return profile.missions.list;
+  }
+  function progressMission(id, value, mode) {
+    missionsToday().forEach(m => {
+      if (m.id !== id || m.done) return;
+      const def = MISSIONS.find(x => x.id === id);
+      m.prog = mode === 'max' ? Math.max(m.prog, value) : m.prog + value;
+      if (m.prog >= def.goal) { m.prog = def.goal; m.done = true; addXp(def.xp); toast('Mission accomplie · <b>+' + def.xp + ' XP</b>'); }
+    });
+  }
+  const levelOf = xp => Math.floor(Math.sqrt(xp / 40)) + 1;
+  function addXp(n) { profile.xp += n; }
+
+  const BADGES = [
+    { id: 'first_win', sym: '1', color: '#2F8F68', name: 'Première grille', test: p => p.stats.wins >= 1 },
+    { id: 'wins10', sym: '10', color: '#2F8F68', name: 'Dix victoires', test: p => p.stats.wins >= 10 },
+    { id: 'streak3', sym: '3j', color: '#C9781A', name: '3 jours de suite', test: p => p.streak.best >= 3 },
+    { id: 'streak7', sym: '7j', color: '#C9781A', name: 'Une semaine', test: p => p.streak.best >= 7 },
+    { id: 'streak30', sym: '30', color: '#C9781A', name: 'Un mois', test: p => p.streak.best >= 30 },
+    { id: 'rush10', sym: 'R10', color: '#B23A48', name: 'Rush 10', test: p => p.rushBest >= 10 },
+    { id: 'rush20', sym: 'R20', color: '#B23A48', name: 'Rush 20', test: p => p.rushBest >= 20 },
+    { id: 'puz100', sym: '100', color: '#2847D0', name: '100 problèmes', test: p => p.stats.puzzlesSolved >= 100 },
+    { id: 'puz1500', sym: '★', color: '#2847D0', name: 'Problèmes 1500', test: p => p.r.puzzle.peak >= 1500 },
+    { id: 'diab', sym: 'D', color: '#7446C4', name: 'Diabolique vaincu', test: p => p.stats.diabWins >= 1 },
+    { id: 'flawless', sym: '✓', color: '#148F8A', name: 'Expert sans faute', test: p => p.stats.flawlessExpert >= 1 },
+    { id: 'prof', sym: 'P', color: '#2A3442', name: 'Bat le Professeur', test: p => !!p.stats.beat.prof }
+  ];
+  function checkBadges() {
+    const fresh = [];
+    BADGES.forEach(b => { if (!profile.badges[b.id] && b.test(profile)) { profile.badges[b.id] = Date.now(); fresh.push(b); addXp(25); } });
+    if (fresh.length) setTimeout(() => toast('Badge débloqué · <b>' + fresh.map(b => b.name).join(', ') + '</b>', 3200), 900);
+    return fresh;
+  }
+  function streakNow() {
+    const s = profile.streak, k = today();
+    return (s.last === k || s.last === shiftDay(k, -1)) ? s.cur : 0;
+  }
+  function markDaily() {
+    const s = profile.streak, k = today();
+    if (s.last === k) return;
+    s.cur = s.last === shiftDay(k, -1) ? s.cur + 1 : 1;
+    s.last = k; s.best = Math.max(s.best, s.cur);
+  }
+  const dailyOf = k => profile.daily[k] || (profile.daily[k] = {});
+
+  // ================= HOME =================
+  RENDER.home = function () {
+    const k = today(), dow = new Date().getDay(), d = profile.daily[k] || {};
+    const st = streakNow(), lvl = levelOf(profile.xp);
+    const nextXp = Math.pow(lvl, 2) * 40, prevXp = Math.pow(lvl - 1, 2) * 40;
+    let h = '<div class="topline"><span class="wordmark">Sudoku <em>Elo</em></span><span class="chip" title="Série de jours">' + ICON.flame(st > 0) + st + '</span><span class="chip">Niv. ' + lvl + '</span></div>';
+    if (cur && !cur.finished) {
+      h += '<button class="primary resume" id="h-resume" style="margin-top:8px"><span><span class="t">Reprendre ' + (cur.mode === 'duel' ? 'le duel contre ' + cur.bot.name : cur.mode === 'daily' ? 'la grille du jour' : 'la partie') + '</span><span class="s">' + LV[cur.level].name + ' · ' + fmt(cur.elapsed / 1000) + '</span></span><span class="arrow">→</span></button>';
+    }
+    const pz = d.puzzle, gr = d.grid;
+    h += '<div class="stack-v"><section class="card"><div class="card-h"><h2>Défis du jour</h2><span class="xp">' + new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) + '</span></div><div class="daily">' +
+      '<button class="dtile" id="h-dpuz"><span class="st ' + (pz ? (pz.ok ? 'done' : 'fail') : '') + '">' + (pz ? (pz.ok ? 'Réussi' : 'Raté') : 'À faire') + '</span><span class="k">Problème</span><span class="t">' + TIER_NAMES[DAY_TIER[dow]] + '</span><span class="s">' + (pz ? fmtLong(pz.time) : 'Un coup à trouver') + '</span></button>' +
+      '<button class="dtile" id="h-dgrid"><span class="st ' + (gr ? (gr.won ? 'done' : 'fail') : '') + '">' + (gr ? (gr.won ? fmt(gr.time) : 'Perdue') : 'À faire') + '</span><span class="k">Grille</span><span class="t">' + LV[DAY_LEVEL[dow]].name + '</span><span class="s">' + (gr ? 'Voir le bilan' : 'La même pour tous') + '</span></button></div>';
+    // week strip
+    const mon = shiftDay(k, -((dow + 6) % 7));
+    h += '<div class="week">' + ['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((lab, j) => {
+      const dk = shiftDay(mon, j), dd = profile.daily[dk] || {};
+      const on = (dd.puzzle && dd.puzzle.ok) || (dd.grid && dd.grid.won);
+      return '<div><i class="' + (on ? 'on' : '') + (dk === k ? ' today' : '') + '">' + (on ? '✓' : '') + '</i>' + lab + '</div>';
+    }).join('') + '</div></section>';
+    // missions
+    h += '<section class="card"><div class="card-h"><h2>Missions</h2><span class="xp">' + profile.xp + ' XP · niv. ' + (lvl + 1) + ' à ' + nextXp + '</span></div>' +
+      '<span class="pbar"><b style="width:' + (100 * (profile.xp - prevXp) / Math.max(1, nextXp - prevXp)) + '%"></b></span>' +
+      missionsToday().map(m => { const def = MISSIONS.find(x => x.id === m.id); return '<div class="mission' + (m.done ? ' done' : '') + '"><span class="n">' + def.t + '</span><span class="x">' + (m.done ? '✓ ' : m.prog + '/' + def.goal + ' · ') + '+' + def.xp + ' XP</span><span class="pbar"><b style="width:' + (100 * m.prog / def.goal) + '%"></b></span></div>'; }).join('') + '</section>';
+    h += '<div class="quick"><button class="qbtn" id="q-duel">' + ICON.duel + 'Duel</button><button class="qbtn" id="q-puz">' + ICON.puzzle + 'Problèmes</button><button class="qbtn" id="q-rush">' + ICON.rush + 'Rush</button></div>';
+    h += '<section><div class="ratings">' +
+      [['Solo', profile.r.solo.r], ['Duel', profile.r.duel.r], ['Problèmes', profile.r.puzzle.r], ['Rush', profile.rushBest]].map(x => '<div class="rcell"><span class="k">' + x[0] + '</span><span class="v">' + x[1] + '</span></div>').join('') + '</div></section></div>';
+    const el = $('#s-home'); el.innerHTML = h;
+    const rs = $('#h-resume'); if (rs) rs.addEventListener('click', openGame);
+    $('#h-dpuz').addEventListener('click', openDailyProblem);
+    $('#h-dgrid').addEventListener('click', () => { const g = profile.daily[k] && profile.daily[k].grid; if (g && g.id && games[g.id]) openReview(g.id); else startDailyGrid(); });
+    $('#q-duel').addEventListener('click', () => goTab('play'));
+    $('#q-puz').addEventListener('click', () => startRated());
+    $('#q-rush').addEventListener('click', startRush);
+  };
+
+  // ================= PLAY =================
+  RENDER.play = function () {
+    const R = profile.r;
+    let h = '<div class="page-h"><span class="eyebrow">Jouer</span><h1>Duels</h1></div>' +
+      '<p class="seg-note">Course contre un bot sur la même grille : le premier qui la termine gagne. Ton Elo duel : <b class="num">' + R.duel.r + '</b>' + (R.duel.n < 10 ? ' (provisoire ' + R.duel.n + '/10)' : '') + '.</p><div class="bots">';
+    BOTS.forEach(b => {
+      const Ex = expected(R.duel.r, b.rating), K = R.duel.n < 10 ? 40 : 24;
+      h += '<button class="bot" data-bot="' + b.id + '"><span class="avatar" style="background:' + b.color + '">' + b.ini + '</span><span><span class="nm">' + b.name + (profile.stats.beat[b.id] ? ' <span class="rec" style="color:var(--good)">Battu</span>' : '') + '</span><br><span class="tg">' + b.tag + ' · ' + LV[recommended(b.rating)].name + '</span></span><span class="rt">' + b.rating + '<small><span class="up">+' + Math.round(K * (1 - Ex)) + '</span> / <span class="down">' + Math.round(-K * Ex) + '</span></small></span></button>';
+    });
+    h += '</div>';
+    h += '<div class="page-h" style="margin-top:26px"><h1>Solo</h1></div>' +
+      '<div class="seg" role="group" aria-label="Type de partie"><button id="mode-ranked" aria-pressed="' + ranked + '">Classée</button><button id="mode-free" aria-pressed="' + !ranked + '">Libre</button></div>' +
+      '<p class="seg-note">' + (ranked ? 'Ton Elo solo (<b class="num">' + R.solo.r + '</b>) dépend de la difficulté, du temps, des erreurs et des indices.' : 'Entraînement libre : la partie est analysée, ton Elo ne bouge pas.') + '</p><div class="levels">';
+    const rec = recommended(R.solo.r);
+    LV.forEach((L, k) => {
+      const Ex = expected(R.solo.r, L.base + L.span / 2), K = R.solo.n < 10 ? 40 : R.solo.r >= 2000 ? 16 : 24;
+      const up = Math.round(K * (0.9 - Ex)) || 0, down = Math.round(-K * Ex) || 0;
+      h += '<button class="lvl" data-level="' + k + '"><span class="pips">' + [0, 1, 2, 3, 4].map(j => '<i class="' + (j <= k ? 'on' : '') + '" style="height:' + (6 + j * 3) + 'px"></i>').join('') + '</span>' +
+        '<span><span class="name">' + L.name + (k === rec ? ' <span class="rec">Adapté</span>' : '') + '</span><span class="sub">' + L.base + '–' + (L.base + L.span) + ' · réf. ' + Math.round(L.par / 60) + ' min</span></span>' +
+        '<span class="stake num">' + (ranked ? '<span class="' + (up >= 0 ? 'up' : 'down') + '">' + signed(up) + '</span><br><span class="down">' + down + '</span>' : '<span class="muted">libre</span>') + '</span></button>';
+    });
+    h += '</div>';
+    const el = $('#s-play'); el.innerHTML = h;
+    el.querySelectorAll('[data-bot]').forEach(b => b.addEventListener('click', () => requestGame({ mode: 'duel', bot: b.dataset.bot })));
+    el.querySelectorAll('[data-level]').forEach(b => b.addEventListener('click', () => requestGame({ mode: ranked ? 'solo' : 'free', level: +b.dataset.level })));
+    $('#mode-ranked').addEventListener('click', () => { ranked = true; store.set('ranked', true); RENDER.play(); });
+    $('#mode-free').addEventListener('click', () => { ranked = false; store.set('ranked', false); RENDER.play(); });
+  };
+
+  // ================= GAME (solo / duel / daily) =================
+  function requestGame(opts) {
+    if (cur && !cur.finished && cur.moves.length) {
+      modal('<h2>Partie en cours</h2><p>Tu as une partie ' + LV[cur.level].name + ' en cours. En lancer une autre compte comme un abandon' + (cur.mode === 'solo' || cur.mode === 'duel' ? ' et coûte des points Elo.' : '.') + '</p><div class="btns"><button class="btn dark" data-act="resume">Reprendre la partie en cours</button><button class="btn danger" data-act="new">Abandonner et commencer</button><button class="btn" data-act="no">Annuler</button></div>',
+        { resume: openGame, new: () => { endGame(false, { silent: true }); startGame(opts); } });
+      return;
+    }
+    startGame(opts);
+  }
+  function startDailyGrid() { requestGame({ mode: 'daily' }); }
+
+  function startGame(opts) {
+    closeModal();
+    const dow = new Date().getDay();
+    let level = opts.level, bot = null;
+    if (opts.mode === 'duel') { bot = botById(opts.bot); level = recommended(bot.rating); }
+    if (opts.mode === 'daily') level = DAY_LEVEL[dow];
+    loading(true, opts.mode === 'duel' ? 'Duel contre ' + bot.name + '…' : opts.mode === 'daily' ? 'Grille du jour…' : 'Grille ' + LV[level].name + '…');
+    const done = res => {
+      loading(false);
+      const gl = res.grade.level, empties = res.puzzle.filter(v => !v).length;
+      cur = {
+        id: 'g' + Date.now().toString(36), mode: opts.mode, level: gl, asked: level, rating: res.grade.rating, grade: res.grade,
+        puzzle: res.puzzle.join(''), solution: res.solution.join(''), board: res.puzzle.slice(), notes: new Array(81).fill(0),
+        mistakes: 0, hints: 0, elapsed: 0, moves: [], undo: [], notesMode: false, selected: -1, finished: false, startedAt: Date.now()
+      };
+      if (opts.mode === 'daily') cur.day = today();
+      if (bot) {
+        const t = LV[gl].par * Math.pow(2, (res.grade.rating - bot.rating) / 350) * (0.85 + Math.random() * 0.35);
+        cur.bot = { id: bot.id, name: bot.name, ini: bot.ini, color: bot.color, rating: bot.rating, time: Math.round(t), empties };
+      }
+      saveCur(); openGame();
+    };
+    if (opts.mode === 'daily') later(() => done(E.generateSeeded(level, 'sudokuelo-' + today() + '-grid')));
+    else E.generateAsync(level, done);
+  }
+
+  let gcells = null, gkeys = null, paused = false, hlCells = [];
   const sol = i => +cur.solution[i];
   const isGiven = i => cur.puzzle[i] !== '0';
   const isLocked = i => isGiven(i) || (cur.board[i] && cur.board[i] === sol(i));
+  const correctCount = g => g.board.filter((v, i) => v && v === +g.solution[i]).length;
 
   function openGame() {
-    closeModal();
-    paused = false; $('#veil').hidden = true; hideHint();
-    show('game');
-    lastTick = performance.now();
-    renderGame();
+    if (!cur) return;
+    closeModal(); paused = false; $('#veil').hidden = true; hideHint();
+    show('game'); lastTick = performance.now(); renderGame();
   }
-
   function renderGame() {
     if (!cur) return;
     const L = LV[cur.level];
-    $('#g-title').textContent = L.name + (cur.level !== cur.asked ? ' (demandé : ' + LV[cur.asked].name + ')' : '');
-    $('#g-sub').textContent = (cur.ranked ? 'Classée' : 'Libre') + ' · grille ' + cur.rating;
+    const modeName = { solo: 'Classée', free: 'Libre', duel: 'Duel', daily: 'Grille du jour' }[cur.mode];
+    $('#g-title').textContent = cur.mode === 'duel' ? 'Duel contre ' + cur.bot.name : cur.mode === 'daily' ? 'Grille du jour · ' + L.name : L.name;
+    $('#g-sub').textContent = modeName + ' · grille ' + cur.rating + (cur.mode === 'duel' ? ' · ' + cur.bot.name + ' ' + cur.bot.rating : '');
     $('#g-x').innerHTML = [0, 1, 2].map(k => '<span class="' + (k < cur.mistakes ? 'hit' : '') + '">' + (k < cur.mistakes ? '✕' : '·') + '</span>').join(' ');
     $('#g-h').textContent = cur.hints;
     $('#t-notes').setAttribute('aria-pressed', String(cur.notesMode));
     $('#notes-badge').textContent = cur.notesMode ? 'ON' : 'OFF';
     $('#pad').classList.toggle('notes-on', cur.notesMode);
-    renderTime();
-    renderBoard();
-    const counts = new Array(10).fill(0);
-    cur.board.forEach((v, i) => { if (v && v === sol(i)) counts[v]++; });
-    document.querySelectorAll('.key').forEach(k => {
-      const d = +k.dataset.d; const left = 9 - counts[d];
-      k.disabled = left === 0; k.querySelector('.r').textContent = left;
-    });
+    $('#g-opp').hidden = cur.mode !== 'duel';
+    renderTime(); renderDuel();
+    const hl = {}; hlCells.forEach(i => { hl[i] = 'hl'; });
+    paint(gcells, { val: cur.board, given: cur.board.map((v, i) => isGiven(i)), wrong: cur.board.map((v, i) => v && v !== sol(i)), notes: cur.notes, sel: cur.selected, hl });
+    padCounts(gkeys, cur.board.map((v, i) => (v === sol(i) ? v : 0)));
   }
-
-  let hlCells = [];
-  function renderBoard() {
-    const s = cur.selected;
-    const sv = s >= 0 ? cur.board[s] : 0;
-    for (let i = 0; i < 81; i++) {
-      const c = cells[i], v = cur.board[i];
-      const wrong = v && v !== sol(i);
-      let cls = 'cell';
-      if (isGiven(i)) cls += ' given'; else if (wrong) cls += ' wrong'; else if (v) cls += ' user';
-      if (i === s) cls += ' sel';
-      else if (sv && v === sv) cls += ' same';
-      else if (s >= 0 && E.ISPEER[s * 81 + i]) cls += ' peer';
-      if (hlCells.indexOf(i) >= 0) cls += ' hl';
-      c.className = cls;
-      if (v) { c.innerHTML = '<span>' + v + '</span>'; c.setAttribute('aria-label', cellName(i) + ' : ' + v); }
-      else if (cur.notes[i]) {
-        let h = '<span class="notes">';
-        for (let d = 1; d <= 9; d++) h += '<span class="' + (sv === d && (cur.notes[i] & (1 << (d - 1))) ? 'm' : '') + '">' + ((cur.notes[i] & (1 << (d - 1))) ? d : '') + '</span>';
-        c.innerHTML = h + '</span>'; c.setAttribute('aria-label', cellName(i) + ' : notes ' + E.digitsOf(cur.notes[i]).join(' '));
-      } else { c.innerHTML = ''; c.setAttribute('aria-label', cellName(i) + ' : vide'); }
-    }
+  function renderDuel() {
+    if (!cur || cur.mode !== 'duel') return;
+    const b = cur.bot, bp = botProgress(cur), empties = b.empties;
+    const me = correctCount(cur) - (81 - empties);
+    $('#opp-av').textContent = b.ini; $('#opp-av').style.background = b.color;
+    $('#opp-txt').textContent = b.name + ' · ' + bp + '/' + empties;
+    $('#opp-bar').style.width = (100 * bp / empties) + '%';
+    $('#me-bar').style.width = (100 * me / empties) + '%';
+    $('#me-txt').textContent = 'Toi ' + me + '/' + empties;
   }
-
-  function select(i) {
-    if (!cur || cur.finished || paused) return;
-    cur.selected = i; renderBoard();
-  }
-
-  function pushUndo(i) {
-    cur.undo.push({ i, v: cur.board[i], n: cur.notes[i] });
-    if (cur.undo.length > 200) cur.undo.shift();
-  }
-
-  function clearPeerNotes(i, d) {
-    const nb = ~(1 << (d - 1));
-    E.PEERS[i].forEach(p => { cur.notes[p] &= nb; });
-  }
-
+  function renderTime() { if (cur) $('#g-time').textContent = fmt(cur.elapsed / 1000); }
+  function selectCell(i) { if (!cur || cur.finished || paused) return; cur.selected = i; renderGame(); }
+  function pushUndo(i) { cur.undo.push({ i, v: cur.board[i], n: cur.notes[i] }); if (cur.undo.length > 200) cur.undo.shift(); }
+  function clearPeerNotes(i, d) { const nb = ~(1 << (d - 1)); E.PEERS[i].forEach(p => { cur.notes[p] &= nb; }); }
   function flashUnits(i) {
-    const units = [E.ROW[i], 9 + E.COL[i], 18 + E.BOX[i]];
-    const done = units.filter(u => E.UNITS[u].every(j => cur.board[j] === sol(j)));
-    if (!done.length) return;
-    requestAnimationFrame(() => {
-      done.forEach(u => E.UNITS[u].forEach(j => {
-        const c = cells[j]; c.classList.remove('flash'); void c.offsetWidth; c.classList.add('flash');
-        setTimeout(() => c.classList.remove('flash'), 650);
-      }));
-    });
+    const done = [E.ROW[i], 9 + E.COL[i], 18 + E.BOX[i]].filter(u => E.UNITS[u].every(j => cur.board[j] === sol(j)));
+    done.forEach(u => flashCells(gcells, E.UNITS[u]));
   }
-
+  const solved = () => cur.board.every((v, j) => v === sol(j));
   function inputDigit(d) {
     if (!cur || cur.finished || paused) return;
     const i = cur.selected;
     if (i < 0) { toast('Touche d\'abord une case'); return; }
     if (isLocked(i)) return;
     hideHint();
-    if (cur.notesMode) {
-      if (cur.board[i]) return;
-      pushUndo(i);
-      cur.notes[i] ^= 1 << (d - 1);
-      afterAction();
-      return;
-    }
+    if (cur.notesMode) { if (cur.board[i]) return; pushUndo(i); cur.notes[i] ^= 1 << (d - 1); afterAction(); return; }
     if (cur.board[i] === d) return;
-    const before = cur.board.join('');
-    const ok = d === sol(i);
+    const before = cur.board.join(''), ok = d === sol(i);
     if (!ok) pushUndo(i);
     cur.board[i] = d;
     cur.moves.push({ t: Math.round(cur.elapsed), c: i, v: d, ok, h: false, b: before });
-    if (ok) {
-      cur.notes[i] = 0;
-      clearPeerNotes(i, d);
-      cur.undo = cur.undo.filter(u => u.i !== i);
-      flashUnits(i);
-    } else {
+    if (ok) { cur.notes[i] = 0; clearPeerNotes(i, d); cur.undo = cur.undo.filter(u => u.i !== i); flashUnits(i); }
+    else {
       cur.mistakes++;
-      const c = cells[i];
-      requestAnimationFrame(() => { c.classList.add('shake'); setTimeout(() => c.classList.remove('shake'), 400); });
-      if (cur.mistakes >= 3) { renderGame(); setTimeout(() => endGame(false), 450); return; }
+      const c = gcells[i]; requestAnimationFrame(() => { c.classList.add('shake'); setTimeout(() => c.classList.remove('shake'), 400); });
+      if (cur.mistakes >= 3) { renderGame(); setTimeout(() => endGame(false, { reason: 'errors' }), 450); return; }
     }
-    if (cur.board.every((v, j) => v === sol(j))) { renderGame(); setTimeout(() => endGame(true), 500); return; }
+    if (solved()) { renderGame(); setTimeout(() => endGame(true), 450); return; }
     afterAction();
   }
-
   function afterAction() { renderGame(); saveCur(); }
-
   function erase() {
     if (!cur || cur.finished || paused) return;
     const i = cur.selected;
-    if (i < 0 || isLocked(i)) return;
-    if (!cur.board[i] && !cur.notes[i]) return;
-    pushUndo(i);
-    cur.board[i] = 0; cur.notes[i] = 0;
-    hideHint(); afterAction();
+    if (i < 0 || isLocked(i) || (!cur.board[i] && !cur.notes[i])) return;
+    pushUndo(i); cur.board[i] = 0; cur.notes[i] = 0; hideHint(); afterAction();
   }
-
   function undo() {
     if (!cur || cur.finished || paused) return;
     const u = cur.undo.pop();
     if (!u) { toast('Rien à annuler'); return; }
-    cur.board[u.i] = u.v; cur.notes[u.i] = u.n; cur.selected = u.i;
-    hideHint(); afterAction();
+    cur.board[u.i] = u.v; cur.notes[u.i] = u.n; cur.selected = u.i; hideHint(); afterAction();
   }
+  function toggleNotes() { if (!cur || cur.finished) return; cur.notesMode = !cur.notesMode; renderGame(); saveCur(); }
 
-  function toggleNotes() {
-    if (!cur || cur.finished) return;
-    cur.notesMode = !cur.notesMode; renderGame(); saveCur();
-  }
-
-  // ---------- hints ----------
-  function techName(t) { return E.TECH[t] ? E.TECH[t].name : t; }
-  function explainStep(st, prior) {
+  // ---- hints ----
+  function explainSingle(st, prior) {
     const names = [...new Set(prior.map(p => techName(p.t)))];
-    const pre = names.length ? 'Après élimination par ' + names.join(', ') + ', ' : '';
+    const pre = names.length ? 'après élimination par ' + names.join(', ') + ', ' : '';
     if (st.t === 'nakedSingle') return '<b>' + techName(st.t) + '</b> · ' + cap(pre + 'seul le ' + st.digit + ' reste possible en ' + cellName(st.cell) + '.');
     return '<b>' + techName(st.t) + '</b> · ' + cap(pre + 'dans ' + unitName(st.unit) + ', le ' + st.digit + ' ne peut aller qu\'en ' + cellName(st.cell) + '.');
   }
-  function showHint(html, cellsToHl) {
-    $('#hinttext').innerHTML = html; $('#hintbar').hidden = false;
-    hlCells = cellsToHl || [];
-  }
-  function hideHint() { $('#hintbar').hidden = true; if (hlCells.length) { hlCells = []; } }
-
+  function showHint(html, list) { $('#hinttext').innerHTML = html; $('#hintbar').hidden = false; hlCells = list || []; }
+  function hideHint() { $('#hintbar').hidden = true; hlCells = []; }
   function useHint() {
     if (!cur || cur.finished || paused) return;
+    if (cur.mode === 'duel' && cur.hints >= 1) { /* allowed, but costs time */ }
     const wrongs = [];
     cur.board.forEach((v, i) => { if (v && v !== sol(i)) wrongs.push(i); });
     if (wrongs.length) {
       const i = wrongs.indexOf(cur.selected) >= 0 ? cur.selected : wrongs[0];
-      cur.board[i] = 0; cur.hints++; cur.selected = i;
-      cur.undo = cur.undo.filter(u => u.i !== i);
+      cur.board[i] = 0; cur.hints++; cur.selected = i; cur.undo = cur.undo.filter(u => u.i !== i);
       showHint('<b>Correction</b> · La case ' + cellName(i) + ' contenait une erreur : elle a été effacée.', [i]);
-      afterAction();
-      return;
+      afterAction(); return;
     }
-    const g = cur.board.map((v, i) => (v === sol(i) ? v : 0));
-    const cand = E.computeCands(g);
-    const prior = [];
+    const g = cur.board.map((v, i) => (v === sol(i) ? v : 0)), cand = E.computeCands(g), prior = [];
     let step = null;
-    for (let k = 0; k < 300; k++) {
-      const st = E.nextStep(g, cand);
-      if (!st) break;
-      if (E.isPlacement(st)) { step = st; break; }
-      prior.push(st); E.applyStep(g, cand, st);
-    }
+    for (let k = 0; k < 300; k++) { const st = E.nextStep(g, cand); if (!st) break; if (E.isPlacement(st)) { step = st; break; } prior.push(st); E.applyStep(g, cand, st); }
     let i, d, html, hl;
     if (step) {
-      i = step.cell; d = step.digit; html = explainStep(step, prior);
+      i = step.cell; d = step.digit; html = explainSingle(step, prior);
       hl = step.t === 'hiddenSingle' ? E.UNITS[step.unit].slice() : [i];
-      prior.forEach(p => { (p.cells || []).forEach(c => hl.push(c)); });
     } else {
       i = cur.selected >= 0 && !cur.board[cur.selected] ? cur.selected : -1;
-      if (i < 0) {
-        let best = 10;
-        for (let j = 0; j < 81; j++) if (!g[j] && E.POP[cand[j]] < best) { best = E.POP[cand[j]]; i = j; }
-      }
+      if (i < 0) { let best = 10; for (let j = 0; j < 81; j++) if (!g[j] && E.POP[cand[j]] < best) { best = E.POP[cand[j]]; i = j; } }
       d = sol(i); hl = [i];
-      html = '<b>Case révélée</b> · Aucune technique de base ne débloque la position : il faudrait un raisonnement en chaîne. Le ' + d + ' en ' + cellName(i) + ' a été révélé.';
+      html = '<b>Case révélée</b> · Aucune technique de base ne débloque la position. Le ' + d + ' en ' + cellName(i) + ' a été révélé.';
     }
     cur.moves.push({ t: Math.round(cur.elapsed), c: i, v: d, ok: true, h: true, b: cur.board.join('') });
-    cur.board[i] = d; cur.notes[i] = 0; clearPeerNotes(i, d);
-    cur.undo = cur.undo.filter(u => u.i !== i);
+    cur.board[i] = d; cur.notes[i] = 0; clearPeerNotes(i, d); cur.undo = cur.undo.filter(u => u.i !== i);
     cur.hints++; cur.selected = i;
-    showHint(html, hl);
+    if (cur.mode === 'duel') cur.elapsed += 15000;   // pénalité de 15 s en duel
+    showHint(html + (cur.mode === 'duel' ? ' <span class="muted">(+15 s)</span>' : ''), hl);
     flashUnits(i);
-    if (cur.board.every((v, j) => v === sol(j))) { renderGame(); setTimeout(() => endGame(true), 500); return; }
+    if (solved()) { renderGame(); setTimeout(() => endGame(true), 450); return; }
     afterAction();
   }
 
-  // ---------- timer & pause ----------
-  let lastTick = performance.now(), saveTick = 0;
-  function renderTime() { if (cur) $('#g-time').textContent = fmt(cur.elapsed / 1000); }
-  setInterval(() => {
-    const now = performance.now();
-    if (screen === 'game' && cur && !cur.finished && !paused && document.visibilityState === 'visible' && $('#modal').hidden) {
-      cur.elapsed += now - lastTick;
-      renderTime();
-      if (now - saveTick > 5000) { saveTick = now; saveCur(); }
-    }
-    lastTick = now;
-  }, 250);
-
   function setPause(p) {
     if (!cur || cur.finished) return;
-    paused = p;
-    $('#veil').hidden = !p;
-    $('#veil-time').textContent = 'Temps : ' + fmt(cur.elapsed / 1000) + ' · ' + cur.board.filter((v, i) => v && v === sol(i)).length + '/81 cases';
+    paused = p; $('#veil').hidden = !p;
+    $('#veil-time').textContent = 'Temps : ' + fmt(cur.elapsed / 1000) + ' · ' + correctCount(cur) + '/81 cases';
     saveCur();
   }
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && screen === 'game' && cur && !cur.finished) setPause(true); });
 
-  // ---------- end of game ----------
-  function endGame(won, silent) {
+  // ---- end of game ----
+  function endGame(won, opt) {
+    opt = opt || {};
     if (!cur || cur.finished) return;
     cur.finished = true;
-    const L = LV[cur.level], time = cur.elapsed / 1000;
-    const P = perfParts(won, time, L.par, cur.mistakes, cur.hints);
-    const Ex = expected(profile.elo, cur.rating);
-    const before = profile.elo, K = kFactor();
-    let delta = 0;
-    if (cur.ranked) {
-      delta = Math.round(K * (P.S - Ex));
-      profile.elo = Math.max(100, before + delta);
-      delta = profile.elo - before;
-      profile.rankedGames++;
-      profile.peak = Math.max(profile.peak, profile.elo);
-    }
+    const g = cur, L = LV[g.level], time = g.elapsed / 1000;
+    const P = perfParts(won, time, L.par, g.mistakes, g.hints);
+    let key = null, before = 0, after = 0, delta = 0, S = P.S, Ex = 0, K = 0;
+    if (g.mode === 'solo') { key = 'solo'; const R = profile.r.solo; K = R.n < 10 ? 40 : R.r >= 2000 ? 16 : 24; Ex = expected(R.r, g.rating); }
+    if (g.mode === 'duel') { key = 'duel'; const R = profile.r.duel; K = R.n < 10 ? 40 : 24; Ex = expected(R.r, g.bot.rating); S = won ? 1 : 0; }
+    if (key) { before = profile.r[key].r; after = pushRating(key, Math.round(K * (S - Ex))); delta = after - before; }
     const rec = {
-      id: cur.id, date: Date.now(), level: cur.level, rating: cur.rating, ranked: cur.ranked, won,
-      time, mistakes: cur.mistakes, hints: cur.hints, eloBefore: before, eloAfter: profile.elo, delta,
-      S: P.S, E: Ex, K, givens: cur.grade.givens, filled: cur.board.filter((v, i) => v === sol(i)).length
+      id: g.id, date: Date.now(), mode: g.mode, level: g.level, rating: g.rating, won, time, mistakes: g.mistakes, hints: g.hints,
+      before, after, delta, S, E: Ex, K, givens: g.grade.givens, filled: correctCount(g), reason: opt.reason || (won ? 'win' : 'abandon'),
+      opp: g.bot ? { id: g.bot.id, name: g.bot.name, rating: g.bot.rating, ini: g.bot.ini, color: g.bot.color, time: g.bot.time } : null
     };
-    profile.history.push(rec);
-    if (profile.history.length > 300) profile.history.shift();
-    games[cur.id] = Object.assign({}, rec, { puzzle: cur.puzzle, solution: cur.solution, moves: cur.moves, final: cur.board.join(''), grade: cur.grade });
+    profile.history.push(rec); if (profile.history.length > 300) profile.history.shift();
+    games[g.id] = Object.assign({}, rec, { puzzle: g.puzzle, solution: g.solution, moves: g.moves, final: g.board.join(''), grade: g.grade });
     const ids = Object.keys(games).sort((a, b) => games[a].date - games[b].date);
-    while (ids.length > 30) delete games[ids.shift()];
-    saveProfile();
-    cur = null; saveCur();
-    if (silent) return;
-    const dcls = delta > 0 ? 'up' : delta < 0 ? 'down' : 'muted';
-    const eloHtml = rec.ranked
-      ? '<div class="elo-move"><span class="from num">' + before + '</span><span class="to num">' + profile.elo + '</span><span class="d ' + dcls + '">' + (delta > 0 ? '+' : '') + delta + '</span></div>'
-      : '<p>Partie libre : Elo inchangé (' + profile.elo + ').</p>';
-    modal('<span class="eyebrow">' + L.name + ' · grille ' + rec.rating + '</span><h2>' + (won ? 'Grille résolue' : 'Partie perdue') + '</h2>' +
-      '<p class="mono">' + fmt(time) + ' (réf. ' + fmt(L.par) + ') · ' + rec.mistakes + ' erreur' + (rec.mistakes > 1 ? 's' : '') + ' · ' + rec.hints + ' indice' + (rec.hints > 1 ? 's' : '') + '</p>' +
-      eloHtml +
-      '<div class="btns"><button class="btn dark" data-act="an">Voir l\'analyse de la partie</button><div class="row2"><button class="btn" data-act="again">Rejouer ' + L.name + '</button><button class="btn" data-act="home">Accueil</button></div></div>',
-      { an: () => openAnalysis(rec.id), again: () => startGame(rec.level), home: goHome });
+    while (ids.length > 40) delete games[ids.shift()];
+    // stats, missions, xp
+    const st = profile.stats;
+    if (won) {
+      st.wins++; addXp(10 + 5 * g.level);
+      if (g.level === 4) st.diabWins++;
+      if (g.level >= 3 && !g.mistakes && !g.hints) st.flawlessExpert++;
+      if (P.ratio < 0.5) st.fastWins++;
+      if (!g.mistakes) progressMission('clean', 1);
+      if (g.level >= 2) progressMission('hard', 1);
+      if (!g.hints) progressMission('nohint', 1);
+    } else st.losses++;
+    if (g.mode === 'duel') { if (won) { st.duelsWon++; st.beat[g.bot.id] = (st.beat[g.bot.id] || 0) + 1; progressMission('duel_win', 1); addXp(15); } else st.duelsLost++; }
+    if (g.mode === 'daily' && g.day === today()) {
+      const d = dailyOf(g.day);
+      if (!d.grid || (!d.grid.won && won)) d.grid = { won, time, id: g.id };
+      if (won) { markDaily(); progressMission('daily_grid', 1); addXp(20); }
+    }
+    const fresh = checkBadges();
+    saveProfile(); cur = null; saveCur();
+    if (opt.silent) return;
+    let title = won ? 'Grille résolue' : 'Partie perdue', sub = '';
+    if (g.mode === 'duel') {
+      title = won ? 'Victoire contre ' + g.bot.name : g.bot.name + ' gagne';
+      sub = won ? g.bot.name + ' en était à ' + botProgress(g) + '/' + g.bot.empties + ' cases.' : opt.reason === 'bot' ? g.bot.name + ' a terminé la grille en ' + fmt(g.bot.time) + '.' : opt.reason === 'errors' ? 'Trois erreurs : partie perdue.' : 'Abandon.';
+    }
+    const eloHtml = key ? '<div class="elo-move"><span class="from num">' + before + '</span><span class="to num">' + after + '</span><span class="d ' + dcls(delta) + '">' + signed(delta) + '</span></div><p class="xp">Elo ' + (key === 'duel' ? 'duel' : 'solo') + '</p>' : '<p>' + (g.mode === 'daily' ? 'Grille du jour : compte pour ta série, pas pour ton Elo.' : 'Partie libre : Elo inchangé.') + '</p>';
+    const badgeHtml = fresh.map(b => '<div class="unlock">' + hexBadge(b.sym, b.color, true) + '<div><b>Badge débloqué</b><br>' + b.name + '</div></div>').join('');
+    modal('<span class="eyebrow">' + L.name + ' · grille ' + rec.rating + '</span><h2>' + title + '</h2>' + (sub ? '<p>' + sub + '</p>' : '') +
+      '<p class="mono">' + fmt(time) + ' · ' + plural(rec.mistakes, 'erreur') + ' · ' + plural(rec.hints, 'indice') + '</p>' + eloHtml + badgeHtml +
+      '<div class="btns"><button class="btn dark" data-act="an">Voir le bilan de partie</button><div class="row2"><button class="btn" data-act="again">' + (g.mode === 'duel' ? 'Revanche' : g.mode === 'daily' ? 'Accueil' : 'Rejouer') + '</button><button class="btn" data-act="home">' + (g.mode === 'duel' ? 'Autres bots' : 'Accueil') + '</button></div></div>',
+      {
+        an: () => openReview(rec.id),
+        again: () => g.mode === 'duel' ? startGame({ mode: 'duel', bot: g.bot.id }) : g.mode === 'daily' ? goTab('home') : startGame({ mode: g.mode, level: g.level }),
+        home: () => goTab(g.mode === 'duel' ? 'play' : 'home')
+      });
   }
 
-  function goHome() { closeModal(); renderHome(); show('home'); }
+  // ================= PROBLEMS =================
+  let pcells = null, pkeys = null, prob = null;
+  function tierFor(r) { return r < 1000 ? 0 : r < 1250 ? 1 : r < 1500 ? 2 : r < 1750 ? 3 : 4; }
+  const puzzleK = () => profile.r.puzzle.n < 20 ? 32 : 16;
 
-  // ---------- ANALYSIS ----------
+  RENDER.puzzles = function () {
+    const R = profile.r.puzzle, k = today(), d = profile.daily[k] || {};
+    const log = profile.puzzleLog.slice(-24);
+    let h = '<div class="page-h"><span class="eyebrow">Problèmes · ' + rankTitle(R.r) + '</span></div><div class="bigrate">' + R.r + '</div>' +
+      '<p class="seg-note">Un problème = une position où une seule case peut être remplie avec certitude. Trouve-la. ' + (R.n < 20 ? 'Classement provisoire (' + R.n + '/20).' : '') + '</p>' +
+      (log.length ? '<div class="results" aria-label="Derniers résultats">' + log.map(x => '<i class="' + (x.ok ? '' : 'ko') + '" title="' + x.rating + '"></i>').join('') + '</div>' : '') +
+      '<div class="stack-v"><button class="primary" id="pz-rated"><span><span class="t">Résoudre des problèmes</span><span class="s">Classés · niveau autour de ' + R.r + '</span></span><span class="arrow">→</span></button>' +
+      '<div class="daily"><button class="dtile" id="pz-rush"><span class="k">Rush</span><span class="t">3 minutes</span><span class="s">Record : ' + profile.rushBest + '</span></button>' +
+      '<button class="dtile" id="pz-daily"><span class="st ' + (d.puzzle ? (d.puzzle.ok ? 'done' : 'fail') : '') + '">' + (d.puzzle ? (d.puzzle.ok ? 'Réussi' : 'Raté') : 'À faire') + '</span><span class="k">Du jour</span><span class="t">' + TIER_NAMES[DAY_TIER[new Date().getDay()]] + '</span><span class="s">Le même pour tous</span></button></div>' +
+      '<section class="card"><div class="card-h"><h2>Statistiques</h2></div><div class="ratings" style="grid-template-columns:repeat(3,1fr)">' +
+      [['Record', R.peak], ['Résolus', profile.stats.puzzlesSolved], ['Réussite', (profile.stats.puzzlesSolved + profile.stats.puzzlesFailed) ? Math.round(100 * profile.stats.puzzlesSolved / (profile.stats.puzzlesSolved + profile.stats.puzzlesFailed)) + ' %' : '—']].map(x => '<div class="rcell"><span class="k">' + x[0] + '</span><span class="v">' + x[1] + '</span></div>').join('') + '</div></section></div>';
+    $('#s-puzzles').innerHTML = h;
+    $('#pz-rated').addEventListener('click', () => startRated());
+    $('#pz-rush').addEventListener('click', startRush);
+    $('#pz-daily').addEventListener('click', openDailyProblem);
+  };
+
+  function startRated() { nextProblem({ mode: 'rated' }); }
+  function nextProblem(opts) {
+    loading(true, 'Problème en préparation…');
+    later(() => {
+      let p = null;
+      if (opts.mode === 'daily') p = E.makeProblemSeeded(DAY_TIER[new Date().getDay()], 'sudokuelo-' + today() + '-puzzle');
+      else {
+        const tier = opts.mode === 'rated' ? tierFor(profile.r.puzzle.r + Math.round((Math.random() - 0.5) * 300)) : opts.tier;
+        p = E.makeProblem(tier);
+      }
+      loading(false);
+      if (!p) { toast('Génération impossible, réessaie'); return; }
+      openProblem(p, opts);
+    });
+  }
+  function openDailyProblem() {
+    const d = profile.daily[today()];
+    nextProblem({ mode: 'daily', already: d && d.puzzle ? d.puzzle : null });
+  }
+  function openProblem(p, opts) {
+    prob = { p, opts, sel: -1, answered: false, showCands: profile.cands !== false && p.tier >= 1, t0: performance.now(), wrongTry: 0 };
+    const titles = { rated: 'Problème classé', daily: 'Problème du jour', practice: 'Entraînement · ' + TIER_NAMES[opts.tier], lesson: 'Exemple' };
+    $('#p-title').textContent = titles[opts.mode];
+    $('#p-sub').textContent = TIER_NAMES[p.tier] + (opts.mode === 'daily' ? ' · ' + new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' }) : '');
+    $('#p-rating').textContent = opts.mode === 'rated' ? p.rating : opts.mode === 'daily' ? 'Du jour' : 'Libre';
+    $('#p-task').textContent = p.answers.length > 1 ? 'Trouve une des ' + p.answers.length + ' cases que tu peux remplir avec certitude.' : 'Trouve la case que tu peux remplir avec certitude.';
+    $('#p-feedback').hidden = true; $('#ppad').hidden = false;
+    show('problem');
+    if (opts.already) { prob.answered = true; revealProblem(opts.already.ok, 'Tu as déjà joué le problème du jour.'); }
+    renderProblem();
+  }
+  function renderProblem(extra) {
+    if (!prob) return;
+    const p = prob.p, g = p.grid;
+    const notes = prob.showCands ? E.computeCands(g) : null;
+    const hl = Object.assign({}, extra || {});
+    let strike = null;
+    if (prob.answered) {
+      p.answers.forEach(a => { hl[a.cell] = 'ans'; });
+      strike = new Array(81).fill(0);
+      p.steps.forEach(st => st.elims.forEach(([i, d]) => { strike[i] |= 1 << (d - 1); if (!hl[i]) hl[i] = 'elim'; }));
+      if (notes) notes.forEach((m, i) => { notes[i] = m & ~strike[i]; });
+    }
+    const val = g.slice();
+    if (prob.answered && prob.placed) val[prob.placed.cell] = prob.placed.digit;
+    paint(pcells, { val, given: g.map(v => !!v), notes: notes || (strike ? new Array(81).fill(0) : null), strike: prob.showCands ? strike : null, sel: prob.sel, hl });
+    $('#p-cands').setAttribute('aria-pressed', String(prob.showCands));
+    padCounts(pkeys, val);
+  }
+  function describeElim(st) {
+    const cells = [...new Set(st.elims.map(e => e[0]))];
+    const list = cells.slice(0, 4).map(cellName).join(', ') + (cells.length > 4 ? '…' : '');
+    const ds = [...new Set(st.elims.map(e => e[1]))].join('/');
+    switch (st.t) {
+      case 'pointing': return '<b>Paire pointante</b> : dans le bloc ' + (st.box + 1) + ', les ' + st.digit + ' sont tous sur ' + unitName(st.unit) + '. On retire le ' + st.digit + ' de ' + list + '.';
+      case 'boxLine': return '<b>Réduction</b> : dans ' + unitName(st.unit) + ', les ' + st.digit + ' sont tous dans le bloc ' + (st.box + 1) + '. On retire le ' + st.digit + ' de ' + list + '.';
+      case 'nakedPair': case 'nakedTriple': case 'nakedQuad':
+        return '<b>' + techName(st.t) + '</b> : ' + st.cells.map(cellName).join(', ') + ' ne contiennent que ' + st.digits.join('/') + ' dans ' + unitName(st.unit) + '. Ces chiffres sortent de ' + list + '.';
+      case 'hiddenPair': case 'hiddenTriple':
+        return '<b>' + techName(st.t) + '</b> : dans ' + unitName(st.unit) + ', les ' + st.digits.join('/') + ' n\'ont que ' + st.cells.map(cellName).join(', ') + '. On retire les autres candidats (' + ds + ') de ces cases.';
+      case 'xwing': case 'swordfish':
+        return '<b>' + techName(st.t) + '</b> sur le ' + st.digit + ' : ' + (st.orient === 0 ? 'lignes ' : 'colonnes ') + st.lines.map(x => x + 1).join(', ') + '. Le ' + st.digit + ' sort de ' + list + '.';
+      case 'ywing': return '<b>Y-Wing</b> : pivot ' + cellName(st.cells[0]) + ', ailes ' + cellName(st.cells[1]) + ' et ' + cellName(st.cells[2]) + '. Le ' + st.digit + ' sort de ' + list + '.';
+      default: return techName(st.t) + '.';
+    }
+  }
+  function describeAnswer(a) {
+    return a.t === 'nakedSingle' ? '<b>Singleton nu</b> : il ne reste que le ' + a.digit + ' en ' + cellName(a.cell) + '.' : '<b>Singleton caché</b> : dans ' + unitName(a.unit) + ', le ' + a.digit + ' ne peut aller qu\'en ' + cellName(a.cell) + '.';
+  }
+  function problemDigit(d) {
+    if (!prob || prob.answered) return;
+    const p = prob.p, i = prob.sel;
+    if (i < 0) { toast('Touche d\'abord une case'); return; }
+    if (p.grid[i]) return;
+    const hit = p.answers.find(a => a.cell === i && a.digit === d);
+    if (!hit && p.solution[i] === d) { toast('Ce chiffre est juste, mais pas encore démontrable ici. Cherche une case certaine.', 3200); return; }
+    prob.answered = true; prob.placed = { cell: i, digit: d };
+    const ok = !!hit, time = (performance.now() - prob.t0) / 1000, o = prob.opts;
+    let note = '';
+    if (o.mode === 'rated') {
+      const R = profile.r.puzzle, before = R.r, Ex = expected(R.r, p.rating);
+      const after = pushRating('puzzle', Math.round(puzzleK() * ((ok ? 1 : 0) - Ex)));
+      note = '<span class="' + dcls(after - before) + ' mono">' + signed(after - before) + ' · ' + after + '</span>';
+      profile.puzzleLog.push({ ok, rating: p.rating, delta: after - before }); if (profile.puzzleLog.length > 60) profile.puzzleLog.shift();
+    }
+    if (o.mode === 'daily') {
+      const d0 = dailyOf(today());
+      if (!d0.puzzle) { d0.puzzle = { ok, time }; if (ok) { markDaily(); progressMission('daily_puzzle', 1); addXp(20); } }
+    }
+    if (ok) { profile.stats.puzzlesSolved++; addXp(5); progressMission('puzzles5', 1); } else profile.stats.puzzlesFailed++;
+    checkBadges(); saveProfile();
+    revealProblem(ok, note, hit);
+    renderProblem({ [i]: ok ? 'okflash' : 'koflash' });
+  }
+  function revealProblem(ok, note, hit) {
+    const p = prob.p, o = prob.opts;
+    const main = hit || p.answers[0];
+    const others = p.answers.filter(a => a !== main);
+    const steps = p.steps.map(describeElim).concat([describeAnswer(main)]);
+    const fb = $('#p-feedback');
+    fb.className = 'feedback ' + (ok ? 'ok' : 'ko'); fb.hidden = false;
+    fb.innerHTML = '<div class="h"><span class="' + (ok ? 'up' : 'down') + '">' + (ok ? 'Bien joué' : 'Raté') + '</span>' + (note || '') + '</div>' +
+      (!ok && prob.placed ? '<p class="muted" style="margin:0;font-size:14px">Le ' + prob.placed.digit + ' en ' + cellName(prob.placed.cell) + ' n\'était pas démontrable. ' + (p.solution[prob.placed.cell] === prob.placed.digit ? '' : 'Il est même faux.') + '</p>' : '') +
+      '<ol>' + steps.map(s => '<li>' + s + '</li>').join('') + '</ol>' +
+      (others.length ? '<p class="muted" style="margin:0;font-size:13px">Autres réponses acceptées : ' + others.map(a => a.digit + ' en ' + cellName(a.cell)).join(', ') + '.</p>' : '') +
+      '<div class="row2">' + (o.mode === 'daily' ? '<button class="btn" id="fb-home">Accueil</button><button class="btn dark" id="fb-more">Problèmes classés</button>' : '<button class="btn" id="fb-quit">Terminer</button><button class="btn dark" id="fb-next">Suivant</button>') + '</div>';
+    $('#ppad').hidden = true;
+    const q = id => fb.querySelector(id);
+    if (q('#fb-next')) q('#fb-next').addEventListener('click', () => nextProblem(o.mode === 'practice' ? { mode: 'practice', tier: o.tier } : { mode: 'rated' }));
+    if (q('#fb-quit')) q('#fb-quit').addEventListener('click', () => goTab(o.mode === 'practice' ? 'learn' : 'puzzles'));
+    if (q('#fb-home')) q('#fb-home').addEventListener('click', () => goTab('home'));
+    if (q('#fb-more')) q('#fb-more').addEventListener('click', startRated);
+    prob.showCands = prob.showCands || p.tier >= 1;
+  }
+
+  // ================= RUSH =================
+  let rcells = null, rkeys = null, rush = null;
+  function rushTier(score) { return score < 9 ? 0 : score < 14 ? 1 : score < 19 ? 2 : score < 25 ? 3 : 4; }
+  function startRush() {
+    loading(true, 'Rush en préparation…');
+    later(() => {
+      rush = { score: 0, strikes: 0, left: 180000, running: true, queue: [], p: null, sel: -1, cands: profile.rushCands === true, log: [] };
+      rush.p = E.makeProblem(0); rush.queue.push(E.makeProblem(0));
+      loading(false); show('rush'); renderRush();
+    });
+  }
+  function rushFill() {
+    if (!rush || !rush.running) return;
+    if (rush.queue.length < 2) setTimeout(() => { if (rush && rush.running && rush.queue.length < 2) { const p = E.makeProblem(rushTier(rush.score + rush.queue.length + 1)); if (p) rush.queue.push(p); } }, 60);
+  }
+  function renderRush(extra) {
+    if (!rush) return;
+    const s = Math.ceil(rush.left / 1000);
+    $('#r-clock').textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+    $('#r-clock').classList.toggle('low', s <= 20);
+    $('#r-score').textContent = rush.score;
+    $('#r-strikes').innerHTML = [0, 1, 2].map(k => '<span class="' + (k < rush.strikes ? 'hit' : '') + '">✕</span>').join('');
+    $('#r-cands').setAttribute('aria-pressed', String(rush.cands));
+    $('#r-sub').textContent = TIER_NAMES[rush.p.tier] + ' · record ' + profile.rushBest;
+    const g = rush.p.grid;
+    paint(rcells, { val: g, given: g.map(v => !!v), notes: rush.cands ? E.computeCands(g) : null, sel: rush.sel, hl: extra || {} });
+    padCounts(rkeys, g);
+  }
+  function rushDigit(d) {
+    if (!rush || !rush.running) return;
+    const p = rush.p, i = rush.sel;
+    if (i < 0) return;
+    if (p.grid[i]) return;
+    const ok = p.answers.some(a => a.cell === i && a.digit === d);
+    if (!ok && p.solution[i] === d) { $('#r-msg').textContent = 'Juste, mais pas démontrable : cherche une case certaine.'; return; }
+    const hl = {}; hl[i] = ok ? 'okflash' : 'koflash';
+    if (!ok) p.answers.forEach(a => { hl[a.cell] = 'ans'; });
+    rush.log.push(ok);
+    if (ok) rush.score++; else rush.strikes++;
+    $('#r-msg').textContent = ok ? 'Correct !' : 'Raté : la bonne case est entourée.';
+    renderRush(hl);
+    rush.running = rush.strikes < 3;
+    if (!rush.running) { setTimeout(endRush, 700); return; }
+    rush.lock = true;
+    setTimeout(() => {
+      if (!rush) return;
+      rush.lock = false;
+      rush.p = rush.queue.shift() || E.makeProblem(rushTier(rush.score));
+      rush.sel = -1; $('#r-msg').textContent = 'Trouve une case certaine, le plus vite possible.';
+      renderRush(); rushFill();
+    }, ok ? 350 : 900);
+  }
+  function endRush() {
+    if (!rush) return;
+    rush.running = false;
+    const sc = rush.score, best = profile.rushBest, rec = sc > best;
+    if (rec) profile.rushBest = sc;
+    profile.rushHist = (profile.rushHist || []).concat([{ t: Date.now(), s: sc }]).slice(-50);
+    progressMission('rush8', sc, 'max'); addXp(sc * 2);
+    const fresh = checkBadges(); saveProfile();
+    const log = rush.log;
+    rush = null;
+    modal('<span class="eyebrow">Rush · 3 minutes</span><h2>' + sc + ' point' + (sc > 1 ? 's' : '') + '</h2><p>' + (rec ? 'Nouveau record (ancien : ' + best + ').' : 'Record : ' + Math.max(best, sc) + '.') + '</p>' +
+      '<div class="results">' + log.map(ok => '<i class="' + (ok ? '' : 'ko') + '"></i>').join('') + '</div>' +
+      fresh.map(b => '<div class="unlock">' + hexBadge(b.sym, b.color, true) + '<div><b>Badge débloqué</b><br>' + b.name + '</div></div>').join('') +
+      '<div class="btns"><button class="btn dark" data-act="again">Rejouer</button><button class="btn" data-act="back">Problèmes</button></div>',
+      { again: startRush, back: () => goTab('puzzles') });
+  }
+
+  // ================= LEARN =================
+  const LESSONS = [
+    { tier: 0, title: 'Singletons nus et cachés', sub: 'La base de toute résolution', paras: [
+      'Un <b>singleton nu</b> est une case où un seul chiffre reste possible : les huit autres sont déjà présents dans sa ligne, sa colonne ou son bloc.',
+      'Un <b>singleton caché</b> est l\'inverse : dans une ligne, une colonne ou un bloc, un chiffre n\'a plus qu\'une seule place possible, même si la case admet d\'autres candidats.',
+      'Méthode : balaie chiffre par chiffre. Prends les 1, regarde chaque bloc où il manque un 1 et élimine les lignes et colonnes déjà occupées. Puis les 2, et ainsi de suite.'] },
+    { tier: 1, title: 'Pointantes et réductions', sub: 'Les premières éliminations', paras: [
+      'Si, dans un bloc, tous les candidats d\'un chiffre sont alignés sur une même ligne, ce chiffre ira forcément dans ce bloc sur cette ligne. On peut donc le retirer du reste de la ligne : c\'est la <b>paire pointante</b>.',
+      'La <b>réduction bloc/ligne</b> est le miroir : si dans une ligne tous les candidats d\'un chiffre tombent dans le même bloc, on le retire des autres cases de ce bloc.',
+      'Ces éliminations ne remplissent pas de case directement : elles font apparaître un singleton juste après.'] },
+    { tier: 2, title: 'Paires nues et cachées', sub: 'Raisonner sur deux cases', paras: [
+      'Deux cases d\'une même unité qui ne contiennent que les deux mêmes candidats (par exemple 3 et 7) forment une <b>paire nue</b>. Le 3 et le 7 sont réservés à ces deux cases : on les retire du reste de l\'unité.',
+      'Une <b>paire cachée</b> : deux chiffres qui n\'apparaissent que dans les deux mêmes cases d\'une unité. Ces deux cases ne peuvent contenir qu\'eux : on retire leurs autres candidats.',
+      'Astuce : active les candidats et cherche les cases à deux chiffres.'] },
+    { tier: 3, title: 'Triplets et X-Wing', sub: 'Niveau Expert', paras: [
+      'Les <b>triplets</b> généralisent les paires : trois cases d\'une unité qui se partagent trois candidats au total, ou trois chiffres confinés à trois cases.',
+      'Le <b>X-Wing</b> : un chiffre n\'a que deux places possibles sur deux lignes, et ces places sont sur les deux mêmes colonnes. Il occupera forcément deux coins opposés du rectangle : on le retire du reste de ces deux colonnes.'] },
+    { tier: 4, title: 'Y-Wing et Swordfish', sub: 'Niveau Diabolique', paras: [
+      'Le <b>Y-Wing</b> : une case pivot à deux candidats AB voit deux cases « ailes » AC et BC. Quel que soit le chiffre du pivot, une des ailes vaudra C. Toute case qui voit les deux ailes ne peut donc pas contenir C.',
+      'Le <b>Swordfish</b> étend le X-Wing à trois lignes et trois colonnes.'] }
+  ];
+  RENDER.learn = function () {
+    let h = '<div class="page-h"><span class="eyebrow">Apprendre</span><h1>Techniques</h1></div><p class="seg-note">Chaque leçon explique une technique, puis tu t\'entraînes sur des problèmes qui l\'exigent (non classés).</p><div class="lessons">';
+    LESSONS.forEach((l, k) => { h += '<button class="lesson" data-l="' + k + '"><span class="no">' + (k + 1) + '</span><span><span class="t">' + l.title + '</span><br><span class="s">' + l.sub + '</span></span><span class="arrow">→</span></button>'; });
+    h += '</div>';
+    $('#s-learn').innerHTML = h;
+    document.querySelectorAll('[data-l]').forEach(b => b.addEventListener('click', () => openLesson(+b.dataset.l)));
+  };
+  function openLesson(k) {
+    const l = LESSONS[k];
+    $('#lesson').innerHTML = '<div class="page-h"><span class="eyebrow">Leçon ' + (k + 1) + ' · ' + l.sub + '</span><h1>' + l.title + '</h1></div><div class="prose">' + l.paras.map(p => '<p>' + p + '</p>').join('') + '</div>' +
+      '<div class="stack-v"><button class="primary" id="ls-go"><span><span class="t">S\'entraîner</span><span class="s">Problèmes « ' + TIER_NAMES[l.tier] + ' »</span></span><span class="arrow">→</span></button></div>';
+    $('#ls-go').addEventListener('click', () => nextProblem({ mode: 'practice', tier: l.tier }));
+    show('lesson');
+  }
+
+  // ================= PROFILE =================
+  function sparkline(vals, w, h) {
+    if (vals.length < 2) return '';
+    const mn = Math.min(...vals), mx = Math.max(...vals), rg = Math.max(20, mx - mn);
+    const pts = vals.map((v, k) => [3 + k * (w - 6) / (vals.length - 1), h - 3 - (v - mn) / rg * (h - 6)]);
+    const d = pts.map((p, k) => (k ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join('');
+    const l = pts[pts.length - 1];
+    return '<svg viewBox="0 0 ' + w + ' ' + h + '" style="width:100%;height:' + h + 'px" aria-hidden="true"><path d="' + d + 'L' + l[0].toFixed(1) + ' ' + h + 'L3 ' + h + 'Z" fill="var(--accent-soft)"/><path d="' + d + '" fill="none" stroke="var(--accent)" stroke-width="1.8"/><circle cx="' + l[0] + '" cy="' + l[1] + '" r="3" fill="var(--accent)"/></svg>';
+  }
+  RENDER.profile = function () {
+    const R = profile.r, st = profile.stats, k = today();
+    let h = '<div class="page-h"><span class="eyebrow">Profil · niveau ' + levelOf(profile.xp) + ' · ' + profile.xp + ' XP</span><h1>Ton classement</h1></div><div class="stack-v">';
+    h += '<div class="daily">' + [['solo', 'Solo'], ['duel', 'Duel'], ['puzzle', 'Problèmes']].map(x => {
+      const r = R[x[0]];
+      return '<div class="dtile" style="min-height:0"><span class="k">' + x[1] + '</span><span class="t num" style="font-size:28px">' + r.r + '</span><span class="s">record ' + r.peak + ' · ' + r.n + ' parties</span>' + sparkline([x[0] === 'puzzle' ? 1000 : 1200].concat(r.hist).slice(-30), 140, 36) + '</div>';
+    }).join('') + '<div class="dtile" style="min-height:0"><span class="k">Rush</span><span class="t num" style="font-size:28px">' + profile.rushBest + '</span><span class="s">meilleur score</span>' + sparkline((profile.rushHist || []).map(x => x.s).slice(-30), 140, 36) + '</div></div>';
+    // calendar
+    const dow = new Date().getDay(), mon = shiftDay(k, -((dow + 6) % 7) - 28);
+    h += '<section class="card"><div class="card-h"><h2>Série</h2><span class="xp">' + streakNow() + ' jour' + (streakNow() > 1 ? 's' : '') + ' · record ' + profile.streak.best + '</span></div><div class="heat">';
+    for (let j = 0; j < 35; j++) {
+      const dk = shiftDay(mon, j), dd = profile.daily[dk] || {};
+      const n = ((dd.puzzle && dd.puzzle.ok) ? 1 : 0) + ((dd.grid && dd.grid.won) ? 1 : 0);
+      h += '<i class="' + (dk > k ? 'fut' : n === 2 ? 'l2' : n === 1 ? 'l1' : '') + '" title="' + dk + '"></i>';
+    }
+    h += '</div><p class="xp" style="margin:0">Une case par jour sur 5 semaines : clair = un défi du jour réussi, foncé = les deux.</p></section>';
+    // badges
+    h += '<section class="card"><div class="card-h"><h2>Badges</h2><span class="xp">' + Object.keys(profile.badges).length + '/' + BADGES.length + '</span></div><div class="badges">' +
+      BADGES.map(b => '<div class="bdg' + (profile.badges[b.id] ? ' on' : '') + '">' + hexBadge(b.sym, b.color, !!profile.badges[b.id]) + b.name + '</div>').join('') + '</div></section>';
+    // stats
+    h += '<section class="card"><div class="card-h"><h2>Statistiques</h2></div><table class="table"><tbody>' +
+      [['Grilles gagnées', st.wins], ['Grilles perdues', st.losses], ['Duels gagnés / perdus', st.duelsWon + ' / ' + st.duelsLost], ['Problèmes résolus', st.puzzlesSolved], ['Bots battus', Object.keys(st.beat).length + ' / ' + BOTS.length]]
+        .map(x => '<tr><td>' + x[0] + '</td><td class="r">' + x[1] + '</td></tr>').join('') + '</tbody></table></section>';
+    // history
+    h += '<section class="card"><div class="card-h"><h2>Dernières parties</h2><span class="xp">bilan sur les 40 dernières</span></div><div class="glist">';
+    const hist = profile.history.slice().reverse().slice(0, 40);
+    if (!hist.length) h += '<p class="empty">Aucune partie terminée pour l\'instant.</p>';
+    hist.forEach(g => {
+      const has = !!games[g.id];
+      const what = g.mode === 'duel' && g.opp ? 'Duel · ' + g.opp.name : g.mode === 'daily' ? 'Grille du jour' : LV[g.level].name + (g.mode === 'free' ? ' · libre' : '');
+      h += '<button class="grow-btn" data-id="' + g.id + '"' + (has ? '' : ' disabled') + '><span class="a">' + what + ' · ' + (g.won ? 'victoire' : 'défaite') + '</span><span class="b">' + dateStr(g.date) + ' · ' + fmt(g.time) + (has ? ' · bilan →' : '') + '</span><span class="c ' + dcls(g.delta || 0) + '">' + (g.mode === 'solo' || g.mode === 'duel' ? signed(g.delta || 0) : '—') + '</span></button>';
+    });
+    h += '</div></section><button class="btn danger" id="pf-reset">Réinitialiser le profil</button></div>';
+    const el = $('#s-profile'); el.innerHTML = h;
+    el.querySelectorAll('.grow-btn[data-id]').forEach(b => b.addEventListener('click', () => openReview(b.dataset.id)));
+    $('#pf-reset').addEventListener('click', () => modal('<h2>Réinitialiser ?</h2><p>Tous tes classements, ta série, tes badges et ton historique seront effacés. Impossible d\'annuler.</p><div class="btns"><button class="btn danger" data-act="ok">Tout effacer</button><button class="btn" data-act="no">Annuler</button></div>',
+      { ok: () => { profile = newProfile(); games = {}; cur = null; saveProfile(); saveCur(); goTab('profile'); toast('Profil réinitialisé'); } }));
+  };
+
+  // ================= REVIEW (bilan de partie) =================
   const CLS = {
-    obvious: { name: 'Évident', desc: 'déductible immédiatement (singleton)' },
-    ahead: { name: 'Anticipé', desc: 'déductible avec 1 à 2 étapes d\'avance' },
-    technique: { name: 'Technique', desc: 'demandait une élimination (paire, X-Wing…)' },
-    risky: { name: 'Pari', desc: 'pas encore déductible à ce moment' },
-    error: { name: 'Erreur', desc: 'mauvais chiffre' },
-    hint: { name: 'Indice', desc: 'case donnée par l\'aide' }
+    brilliant: { name: 'Brillant', sym: '!!', w: 100, desc: 'demandait une technique d\'élimination' },
+    excellent: { name: 'Excellent', sym: '!', w: 100, desc: 'vu avec une ou deux étapes d\'avance' },
+    good: { name: 'Bon', sym: '✓', w: 95, desc: 'case évidente bien trouvée' },
+    inacc: { name: 'Imprécision', sym: '?!', w: 55, desc: 'juste, mais pas encore démontrable' },
+    blunder: { name: 'Gaffe', sym: '??', w: 0, desc: 'mauvais chiffre' },
+    hint: { name: 'Indice', sym: 'i', w: 40, desc: 'case donnée par l\'aide' }
   };
-  const ORDER = ['obvious', 'ahead', 'technique', 'risky', 'error', 'hint'];
+  const ORDER = ['brilliant', 'excellent', 'good', 'inacc', 'blunder', 'hint'];
   const TECH_HELP = {
-    nakedSingle: 'Une case n\'admet plus qu\'un seul chiffre.',
-    hiddenSingle: 'Un chiffre n\'a plus qu\'une place possible dans une ligne, une colonne ou un bloc.',
-    pointing: 'Dans un bloc, un chiffre est cantonné à une seule ligne ou colonne : on le retire du reste de cette ligne.',
-    boxLine: 'Dans une ligne ou colonne, un chiffre est cantonné à un seul bloc : on le retire du reste du bloc.',
-    nakedPair: 'Deux cases d\'une unité n\'ont que les deux mêmes candidats : ces chiffres sortent des autres cases.',
-    hiddenPair: 'Deux chiffres n\'ont que les deux mêmes places dans une unité : on retire les autres candidats de ces cases.',
-    nakedTriple: 'Trois cases d\'une unité se partagent trois candidats : on les retire ailleurs dans l\'unité.',
-    hiddenTriple: 'Trois chiffres confinés aux trois mêmes cases d\'une unité : les autres candidats de ces cases tombent.',
-    xwing: 'Un chiffre n\'a que deux places sur deux lignes, alignées sur les deux mêmes colonnes : il sort du reste de ces colonnes.',
-    ywing: 'Un pivot AB voit deux cases AC et BC : toute case qui voit les deux ailes ne peut pas contenir C.',
-    swordfish: 'Le X-Wing étendu à trois lignes et trois colonnes.',
-    nakedQuad: 'Quatre cases d\'une unité se partagent quatre candidats.',
-    chain: 'Au-delà des techniques de base : il faut suivre des implications en chaîne sur plusieurs cases.'
+    nakedSingle: 'Une case n\'admet plus qu\'un seul chiffre.', hiddenSingle: 'Un chiffre n\'a plus qu\'une place dans une ligne, une colonne ou un bloc.',
+    pointing: 'Un chiffre cantonné à une ligne dans un bloc sort du reste de la ligne.', boxLine: 'Un chiffre cantonné à un bloc dans une ligne sort du reste du bloc.',
+    nakedPair: 'Deux cases, deux candidats identiques : ils sortent du reste de l\'unité.', hiddenPair: 'Deux chiffres confinés à deux cases : les autres candidats de ces cases tombent.',
+    nakedTriple: 'Trois cases se partagent trois candidats.', hiddenTriple: 'Trois chiffres confinés à trois cases.',
+    xwing: 'Rectangle sur deux lignes et deux colonnes pour un même chiffre.', ywing: 'Pivot AB et ailes AC/BC : C sort des cases qui voient les deux ailes.',
+    swordfish: 'X-Wing sur trois lignes et trois colonnes.', nakedQuad: 'Quatre cases se partagent quatre candidats.', chain: 'Implications en chaîne au-delà des techniques de base.'
   };
-
   function analyse(g) {
     const solA = toArr(g.solution);
     let prevT = 0;
     const rows = g.moves.map((m, k) => {
-      const b = toArr(m.b);
-      const dt = Math.max(0, (m.t - prevT) / 1000); prevT = m.t;
+      const b = toArr(m.b), dt = Math.max(0, (m.t - prevT) / 1000); prevT = m.t;
       const corr = b.map((v, i) => (v === solA[i] ? v : 0));
-      const cand = E.computeCands(corr);
-      const singles = E.findSingles(corr, cand, true);
-      const r = { k, m, dt, singles, b };
+      const singles = E.findSingles(corr, E.computeCands(corr), true);
+      const r = { k, m, dt, singles, b, corr };
       if (m.h) { r.cls = 'hint'; return r; }
-      if (!m.ok) {
-        r.cls = 'error';
-        const conf = E.PEERS[m.c].find(p => b[p] === m.v);
-        r.conflict = conf === undefined ? -1 : conf;
-        return r;
-      }
-      const rd = E.reachDepth(corr, m.c);
-      r.rd = rd;
-      if (rd.depth === Infinity || rd.depth >= 3) r.cls = 'risky';
-      else if (rd.techs.length) r.cls = 'technique';
-      else if (rd.depth === 0) r.cls = 'obvious';
-      else r.cls = 'ahead';
+      if (!m.ok) { r.cls = 'blunder'; const c = E.PEERS[m.c].find(p => b[p] === m.v); r.conflict = c === undefined ? -1 : c; return r; }
+      const rd = E.reachDepth(corr, m.c); r.rd = rd;
+      if (rd.depth === Infinity || rd.depth >= 3) r.cls = 'inacc';
+      else if (rd.techs.length) r.cls = 'brilliant';
+      else if (rd.depth === 0) r.cls = 'good';
+      else r.cls = 'excellent';
       return r;
     });
-    const counts = {}; ORDER.forEach(c => { counts[c] = 0; });
-    rows.forEach(r => counts[r.cls]++);
-    return { rows, counts, solA };
+    const counts = {}; ORDER.forEach(c => { counts[c] = 0; }); rows.forEach(r => counts[r.cls]++);
+    const acc = rows.length ? rows.reduce((a, r) => a + CLS[r.cls].w, 0) / rows.length : 0;
+    return { rows, counts, solA, acc };
   }
-
   function describeMove(r) {
-    const m = r.m;
-    const head = 'Coup ' + (r.k + 1) + ' · ' + m.v + ' en ' + cellName(m.c) + ' · ' + fmtLong(r.dt);
-    let body = '';
+    const m = r.m, head = 'Coup ' + (r.k + 1) + ' · ' + m.v + ' en ' + cellName(m.c) + ' · ' + fmtLong(r.dt);
+    let body;
     if (r.cls === 'hint') body = 'Indice utilisé.';
-    else if (r.cls === 'error') body = 'Erreur. ' + (r.conflict >= 0 ? 'Conflit visible avec le ' + m.v + ' en ' + cellName(r.conflict) + '.' : 'Aucun conflit visible : l\'erreur vient d\'une déduction plus profonde.');
+    else if (r.cls === 'blunder') body = r.conflict >= 0 ? 'Conflit visible avec le ' + m.v + ' en ' + cellName(r.conflict) + '.' : 'Aucun conflit visible : déduction fausse ou pari.';
     else {
       const rd = r.rd, via = rd.via;
-      if (r.cls === 'obvious') body = 'Évident : ' + (via.t === 'nakedSingle' ? 'singleton nu, seul chiffre possible.' : 'singleton caché dans ' + unitName(via.unit) + '.');
-      else if (r.cls === 'ahead') body = 'Anticipé : la case devenait évidente après ' + rd.depth + ' vague' + (rd.depth > 1 ? 's' : '') + ' d\'autres déductions.';
-      else if (r.cls === 'technique') body = 'Technique : il fallait d\'abord ' + [...new Set(rd.techs.map(techName))].join(', ') + '.';
-      else body = 'Pari : ' + (rd.depth === Infinity ? 'pas déductible avec les techniques de base à ce moment.' : 'il restait ' + rd.depth + ' étapes de déduction avant que cette case soit justifiée.');
+      if (r.cls === 'good') body = via.t === 'nakedSingle' ? 'Singleton nu : seul chiffre possible.' : 'Singleton caché dans ' + unitName(via.unit) + '.';
+      else if (r.cls === 'excellent') body = 'Devenait évident après ' + rd.depth + ' vague' + (rd.depth > 1 ? 's' : '') + ' de déductions : tu as vu loin.';
+      else if (r.cls === 'brilliant') body = 'Demandait d\'abord : ' + [...new Set(rd.techs.map(techName))].join(', ') + '.';
+      else body = rd.depth === Infinity ? 'Pas démontrable avec les techniques de base à ce moment.' : 'Il restait ' + rd.depth + ' étapes avant que cette case soit justifiée.';
     }
     return { head, body };
   }
-
   function timeChart(rows, avg) {
-    const W = 340, H = 150, pl = 30, pr = 6, pt = 8, pb = 20;
-    const n = rows.length;
+    const W = 340, H = 150, pl = 30, pr = 6, pt = 8, pb = 20, n = rows.length;
     if (!n) return '<p class="empty">Aucun coup joué.</p>';
-    const mx = Math.max(10, ...rows.map(r => r.dt));
-    const step = mx > 240 ? 60 : mx > 120 ? 30 : mx > 50 ? 15 : 5;
-    const top = Math.ceil(mx / step) * step;
-    const y = v => pt + (H - pt - pb) * (1 - v / top);
-    const bw = (W - pl - pr) / n;
+    const mx = Math.max(10, ...rows.map(r => r.dt)), step = mx > 240 ? 60 : mx > 120 ? 30 : mx > 50 ? 15 : 5, top = Math.ceil(mx / step) * step;
+    const y = v => pt + (H - pt - pb) * (1 - v / top), bw = (W - pl - pr) / n;
     let s = '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Temps de réflexion par coup">';
     for (let v = 0; v <= top; v += step * Math.max(1, Math.round(top / step / 4))) s += '<line class="grid" x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y(v) + '" y2="' + y(v) + '"/><text x="' + (pl - 4) + '" y="' + (y(v) + 3) + '" text-anchor="end">' + (v >= 60 ? (v / 60) + 'm' : v + 's') + '</text>';
-    rows.forEach((r, k) => {
-      const h = Math.max(1.5, y(0) - y(r.dt));
-      s += '<rect class="c-' + r.cls + '" x="' + (pl + k * bw + bw * 0.12).toFixed(1) + '" y="' + (y(0) - h).toFixed(1) + '" width="' + Math.max(1, bw * 0.76).toFixed(1) + '" height="' + h.toFixed(1) + '" rx="1"/>';
-    });
-    s += '<line class="avg" x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y(avg) + '" y2="' + y(avg) + '"/>';
-    s += '<text x="' + pl + '" y="' + (H - 4) + '">coup 1</text><text x="' + (W - pr) + '" y="' + (H - 4) + '" text-anchor="end">coup ' + n + '</text>';
+    rows.forEach((r, k) => { const hh = Math.max(1.5, y(0) - y(r.dt)); s += '<rect class="c-' + r.cls + '" x="' + (pl + k * bw + bw * 0.12).toFixed(1) + '" y="' + (y(0) - hh).toFixed(1) + '" width="' + Math.max(1, bw * 0.76).toFixed(1) + '" height="' + hh.toFixed(1) + '" rx="1"/>'; });
+    s += '<line class="avg" x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y(avg) + '" y2="' + y(avg) + '"/><text x="' + pl + '" y="' + (H - 4) + '">coup 1</text><text x="' + (W - pr) + '" y="' + (H - 4) + '" text-anchor="end">coup ' + n + '</text>';
     return s + '</svg>';
   }
-
-  function miniBoard(boardArr, solA, puzzle, mv, cls) {
+  function miniBoard(arr, solA, puzzle, mv, cls) {
     let h = '<div class="board mini">';
     for (let i = 0; i < 81; i++) {
-      const v = boardArr[i];
-      let c = 'cell';
+      const v = arr[i]; let c = 'cell';
       if (puzzle[i] !== '0') c += ' given'; else if (v && v !== solA[i]) c += ' wrong'; else if (v) c += ' user';
       if (i === mv) c += ' mv t-' + cls;
       h += '<div class="' + c + '">' + (v || '') + '</div>';
     }
     return h + '</div>';
   }
-
-  let replayState = null;
-  function openAnalysis(id) {
+  let replay = null;
+  function openReview(id) {
     closeModal();
-    const g = games[id];
-    const box = $('#analysis');
-    if (!g) { box.innerHTML = '<p class="empty">Cette partie n\'est plus disponible (seules les 30 dernières sont conservées).</p>'; show('analysis'); return; }
-    const L = LV[g.level];
-    const A = analyse(g);
-    const rows = A.rows, played = rows.filter(r => !r.m.h);
-    const correct = played.filter(r => r.cls !== 'error');
-    const acc = played.length ? Math.round(100 * correct.length / played.length) : 0;
-    const P = perfParts(g.won, g.time, L.par, g.mistakes, g.hints);
-    const avg = rows.length ? g.time / rows.length : 0;
-    const dcls = g.delta > 0 ? 'up' : g.delta < 0 ? 'down' : '';
-
-    let h = '<div class="a-head"><span class="eyebrow">' + L.name + ' · grille ' + g.rating + ' · ' + dateStr(g.date) + (g.ranked ? '' : ' · libre') + '</span><h1>' + (g.won ? 'Victoire' : 'Défaite') + ' en ' + fmt(g.time) + '</h1></div>';
-    h += '<div class="tiles">' +
-      '<div class="tile"><span class="k">Temps</span><span class="v num">' + Math.round(P.ratio * 100) + ' %</span><span class="s">de la réf. ' + fmt(L.par) + '</span></div>' +
-      '<div class="tile"><span class="k">Précision</span><span class="v num">' + acc + ' %</span><span class="s">' + g.mistakes + ' err. · ' + g.hints + ' ind.</span></div>' +
-      '<div class="tile"><span class="k">Elo</span><span class="v num ' + dcls + '">' + (g.ranked ? (g.delta > 0 ? '+' : '') + g.delta : '—') + '</span><span class="s">' + (g.ranked ? g.eloBefore + ' → ' + g.eloAfter : 'partie libre') + '</span></div></div>';
-
-    // performance
-    h += '<section class="block"><h2>Performance <small>score ' + P.S.toFixed(2) + ' · attendu ' + g.E.toFixed(2) + '</small></h2>' +
-      '<div class="meter"><div class="fill" style="width:' + (P.S * 100) + '%"></div><div class="exp" style="left:calc(' + (g.E * 100) + '% - 1px)"></div></div>' +
-      '<div class="perf">' +
-      (g.won
-        ? '<div class="line"><span>Facteur temps (' + Math.round(P.ratio * 100) + ' % de la réf.)</span><span>× ' + P.timeF.toFixed(2) + '</span></div>' +
-          '<div class="line"><span>Erreurs (' + g.mistakes + ' × 0,12)</span><span>− ' + (0.12 * g.mistakes).toFixed(2) + '</span></div>' +
-          '<div class="line"><span>Indices (' + g.hints + ' × 0,15)</span><span>− ' + (0.15 * g.hints).toFixed(2) + '</span></div>'
-        : '<div class="line"><span>Partie perdue</span><span>score 0</span></div>') +
-      '<div class="line"><span>Probabilité attendue face à une grille ' + g.rating + '</span><span>' + Math.round(g.E * 100) + ' %</span></div>' +
-      (g.ranked ? '<div class="line"><span>Variation = K ' + g.K + ' × (' + P.S.toFixed(2) + ' − ' + g.E.toFixed(2) + ')</span><span class="' + dcls + '">' + (g.delta > 0 ? '+' : '') + g.delta + '</span></div>' : '') +
-      '</div></section>';
-
-    // move quality
-    const total = rows.length || 1;
-    h += '<section class="block"><h2>Qualité des coups <small>' + rows.length + ' coups</small></h2><div class="stack">' +
-      ORDER.filter(c => A.counts[c]).map(c => '<i class="c-' + c + '" style="width:' + (100 * A.counts[c] / total) + '%"></i>').join('') + '</div><div class="legend">' +
-      ORDER.map(c => '<div><span class="sw c-' + c + '"></span><span>' + CLS[c].name + '</span><b>' + A.counts[c] + '</b></div>').join('') + '</div>' +
-      '<p class="muted" style="font-size:13px">' + ORDER.slice(0, 4).map(c => CLS[c].name + ' : ' + CLS[c].desc).join(' · ') + '.</p></section>';
-
-    // rhythm
+    const g = games[id], box = $('#analysis');
+    if (!g) { box.innerHTML = '<p class="empty">Ce bilan n\'est plus disponible.</p>'; show('review'); return; }
+    const L = LV[g.level], A = analyse(g), rows = A.rows, played = rows.filter(r => !r.m.h);
+    const P = perfParts(g.won, g.time, L.par, g.mistakes, g.hints), avg = rows.length ? g.time / rows.length : 0;
+    const accTxt = A.acc.toFixed(1).replace('.', ',');
+    const coach = A.acc >= 95 ? 'Partie de très haut niveau : presque chaque coup était démontrable au moment où tu l\'as joué.' :
+      A.acc >= 85 ? 'Solide. Quelques coups joués trop tôt, mais ta lecture de grille tient la route.' :
+      A.acc >= 70 ? 'Correct, mais trop de coups joués sans preuve. Ralentis et note les candidats.' :
+      'Beaucoup de paris et d\'erreurs. Reviens sur les leçons de base et entraîne-toi sur les problèmes.';
+    const modeName = g.mode === 'duel' && g.opp ? 'Duel contre ' + g.opp.name + ' (' + g.opp.rating + ')' : g.mode === 'daily' ? 'Grille du jour' : g.mode === 'free' ? 'Partie libre' : 'Partie classée';
+    let h = '<div class="a-head"><span class="eyebrow">' + modeName + ' · ' + L.name + ' · ' + dateStr(g.date) + '</span><h1>' + (g.won ? 'Victoire' : 'Défaite') + ' en ' + fmt(g.time) + '</h1></div>';
+    h += '<section class="block"><div class="acc"><span class="v">' + accTxt + '</span><span class="eyebrow">Précision</span></div>' +
+      '<div class="coach"><span class="avatar sm" style="background:var(--accent)">C</span><div class="bubble">' + coach + '</div></div></section>';
+    h += '<div class="tiles"><div class="tile"><span class="k">Temps</span><span class="v num">' + Math.round(P.ratio * 100) + ' %</span><span class="s">de la réf. ' + fmt(L.par) + '</span></div>' +
+      '<div class="tile"><span class="k">Erreurs</span><span class="v num">' + g.mistakes + '</span><span class="s">' + plural(g.hints, 'indice') + '</span></div>' +
+      '<div class="tile"><span class="k">Elo</span><span class="v num ' + dcls(g.delta || 0) + '">' + (g.mode === 'solo' || g.mode === 'duel' ? signed(g.delta) : '—') + '</span><span class="s">' + (g.mode === 'solo' || g.mode === 'duel' ? g.before + ' → ' + g.after : 'non classée') + '</span></div></div>';
+    h += '<section class="block"><h2>Coups <small>' + rows.length + '</small></h2><table class="cls-table"><tbody>' +
+      ORDER.map(c => '<tr><td><span class="sym c-' + c + '">' + CLS[c].sym + '</span>' + CLS[c].name + ' <span class="muted" style="font-size:12px">· ' + CLS[c].desc + '</span></td><td class="r t-' + c + '">' + A.counts[c] + '</td></tr>').join('') + '</tbody></table></section>';
+    if (g.mode === 'solo') h += '<section class="block"><h2>Performance <small>score ' + P.S.toFixed(2) + ' · attendu ' + g.E.toFixed(2) + '</small></h2><div class="meter"><div class="fill" style="width:' + (P.S * 100) + '%"></div><div class="exp" style="left:calc(' + (g.E * 100) + '% - 1px)"></div></div><p class="xp">Variation = K ' + g.K + ' × (score − attendu). Le score combine temps (× ' + P.timeF.toFixed(2) + '), erreurs (−0,12 chacune) et indices (−0,15 chacun).</p></section>';
+    if (g.mode === 'duel' && g.opp) h += '<section class="block"><h2>Duel</h2><p>' + (g.won ? 'Tu as fini en ' + fmt(g.time) + ', ' + g.opp.name + ' visait ' + fmt(g.opp.time) + '.' : g.reason === 'bot' ? g.opp.name + ' a fini en ' + fmt(g.opp.time) + '.' : 'Partie perdue avant la fin.') + ' Probabilité de victoire attendue : ' + Math.round(g.E * 100) + ' %.</p></section>';
     h += '<section class="block"><h2>Rythme <small>moyenne ' + fmtLong(avg) + ' / case</small></h2>' + timeChart(rows, avg) + '</section>';
-
     // key moments
     const moments = [];
     const pauses = played.slice().sort((a, b) => b.dt - a.dt).filter(r => r.dt >= Math.max(15, avg * 2)).slice(0, 3);
-    pauses.sort((a, b) => a.k - b.k).forEach(r => {
+    pauses.forEach(r => {
       const m = r.m, s = r.singles;
       let txt = 'Tu as cherché ' + fmtLong(r.dt) + ' avant de jouer le ' + m.v + ' en ' + cellName(m.c) + '. ';
       if (s.length) {
-        const ex = s.find(x => x.cell !== m.c) || s[0];
-        const already = s.some(x => x.cell === m.c);
-        txt += (already ? 'Ce coup était évident, et ' : 'Pendant ce temps, ') + s.length + ' case' + (s.length > 1 ? 's évidentes étaient disponibles' : ' évidente était disponible') +
-          (ex && ex.cell !== m.c ? ', par exemple le ' + ex.digit + ' en ' + cellName(ex.cell) + ' (' + (ex.t === 'nakedSingle' ? 'singleton nu' : 'singleton caché dans ' + unitName(ex.unit)) + ')' : '') + '.';
+        const ex = s.find(x => x.cell !== m.c), already = s.some(x => x.cell === m.c);
+        txt += (already ? 'Ce coup était évident, et ' : 'Pendant ce temps, ') + s.length + (s.length > 1 ? ' cases évidentes étaient disponibles' : ' case évidente était disponible') + (ex ? ', par exemple le ' + ex.digit + ' en ' + cellName(ex.cell) : '') + '.';
       } else {
-        const corr = r.b.map((v, i) => (v === A.solA[i] ? v : 0));
-        const st = E.nextElim(E.computeCands(corr));
-        txt += st ? 'Position bloquée : aucune case évidente. La clé était une ' + techName(st.t) + ' sur le ' + (st.digit || (st.digits || []).join('/')) + '.' : 'Position bloquée : aucune technique de base ne suffisait, il fallait un raisonnement en chaîne.';
+        const st = E.nextElim(E.computeCands(r.corr));
+        txt += st ? 'Position bloquée : la clé était une ' + techName(st.t) + '.' : 'Position bloquée : il fallait un raisonnement en chaîne.';
       }
       moments.push({ k: r.k, kind: 'pause', h: 'Hésitation · coup ' + (r.k + 1), txt });
     });
-    rows.filter(r => r.cls === 'error').forEach(r => {
-      const m = r.m;
-      moments.push({ k: r.k, kind: 'error', h: 'Erreur · coup ' + (r.k + 1), txt: m.v + ' en ' + cellName(m.c) + ', la bonne valeur était ' + A.solA[m.c] + '. ' + (r.conflict >= 0 ? 'Le ' + m.v + ' était déjà visible en ' + cellName(r.conflict) + ' : erreur d\'inattention.' : 'Aucun conflit visible : c\'était un pari ou une déduction fausse.') });
-    });
+    rows.filter(r => r.cls === 'blunder').forEach(r => moments.push({ k: r.k, kind: 'error', h: 'Gaffe · coup ' + (r.k + 1), txt: r.m.v + ' en ' + cellName(r.m.c) + ', il fallait ' + A.solA[r.m.c] + '. ' + (r.conflict >= 0 ? 'Le ' + r.m.v + ' était déjà visible en ' + cellName(r.conflict) + '.' : 'Aucun conflit visible : c\'était un pari.') }));
     moments.sort((a, b) => a.k - b.k);
-    h += '<section class="block"><h2>Moments clés</h2>' + (moments.length ? '<ul class="moments">' + moments.map(x => '<li class="k-' + x.kind + '"><span class="h">' + x.h + '</span><span>' + x.txt + '</span></li>').join('') + '</ul>' : '<p class="muted">Aucune longue hésitation ni erreur : partie régulière.</p>') + '</section>';
-
-    // replay
+    h += '<section class="block"><h2>Moments clés</h2>' + (moments.length ? '<ul class="moments">' + moments.map(x => '<li class="k-' + x.kind + '"><span class="h">' + x.h + '</span><span>' + x.txt + '</span></li>').join('') + '</ul>' : '<p class="muted">Aucune longue hésitation ni gaffe.</p>') + '</section>';
     h += '<section class="block"><h2>Revoir la partie</h2><div class="replay"><div id="rp-board"></div><div class="replay-ctl"><button class="iconbtn" id="rp-prev" aria-label="Coup précédent"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><input type="range" id="rp-range" min="0" max="' + rows.length + '" value="' + rows.length + '" aria-label="Position dans la partie"><button class="iconbtn" id="rp-next" aria-label="Coup suivant"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div><div class="caption" id="rp-cap"></div></div></section>';
-
-    // techniques
-    const counts = Object.assign({}, g.grade.counts || {});
-    const techKeys = Object.keys(E.TECH).filter(t => counts[t]);
+    const counts = g.grade.counts || {}, techKeys = Object.keys(E.TECH).filter(t => counts[t]);
     if (!g.grade.solved) techKeys.push('chain');
-    h += '<section class="block"><h2>Techniques de la grille <small>' + g.grade.givens + ' chiffres de départ</small></h2><ul class="techs">' +
-      techKeys.map(t => '<li><b>' + (t === 'chain' ? 'Raisonnement en chaîne' : techName(t)) + '</b><span class="n">' + (t === 'chain' ? g.grade.remaining + ' cases' : '× ' + counts[t]) + '</span><span class="d">' + TECH_HELP[t] + '</span></li>').join('') + '</ul></section>';
-
-    // advice
-    const adv = [];
-    const conflicts = rows.filter(r => r.cls === 'error' && r.conflict >= 0).length;
-    if (conflicts) adv.push(conflicts + ' erreur' + (conflicts > 1 ? 's étaient' : ' était') + ' en conflit direct avec un chiffre déjà posé. Avant de valider, balaie la ligne, la colonne et le bloc.');
-    const risky = A.counts.risky, corrN = correct.length || 1;
-    if (risky / corrN > 0.15) adv.push(Math.round(100 * risky / corrN) + ' % de tes coups n\'étaient pas encore justifiés au moment où tu les as joués. Ça passe ici, mais c\'est ce qui coûte des erreurs sur les grilles plus dures : note les candidats avant de trancher.');
-    const missed = pauses.filter(r => r.singles.length >= 2 && !r.singles.some(x => x.cell === r.m.c)).length;
-    if (missed >= 1) adv.push('Tu as hésité alors que des cases évidentes existaient. Entraîne le balayage chiffre par chiffre : cherche tous les 1, puis tous les 2, bloc par bloc.');
-    if (A.counts.technique) adv.push('Tu as trouvé ' + A.counts.technique + ' coup' + (A.counts.technique > 1 ? 's' : '') + ' qui demandaient une technique d\'élimination. Bonne lecture de grille.');
-    if (g.won && P.ratio < 0.6 && !g.mistakes && !g.hints) adv.push('Résolue en moins de 60 % du temps de référence sans aide : le niveau au-dessus est à ta portée.');
-    if (g.hints) adv.push('Chaque indice retire 0,15 de performance. Avant d\'en prendre un, liste les candidats du bloc le plus rempli.');
-    if (!g.won && g.mistakes >= 3) adv.push('Partie perdue sur 3 erreurs : ralentis sur les dernières cases, c\'est là que les paris coûtent le plus.');
-    if (!adv.length) adv.push('Partie propre et régulière. Continue à ce niveau pour stabiliser ton classement.');
-    h += '<section class="block"><h2>Conseils</h2><ul class="advice">' + adv.slice(0, 4).map(a => '<li>' + a + '</li>').join('') + '</ul></section>';
-
-    h += '<section class="block"><div class="row2" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button class="btn dark" id="a-again">Rejouer ' + L.name + '</button><button class="btn" id="a-home">Accueil</button></div></section>';
-
+    h += '<section class="block"><h2>Techniques de la grille</h2><ul class="techs">' + techKeys.map(t => '<li><b>' + (t === 'chain' ? 'Raisonnement en chaîne' : techName(t)) + '</b><span class="n">' + (t === 'chain' ? g.grade.remaining + ' cases' : '× ' + counts[t]) + '</span><span class="d">' + TECH_HELP[t] + '</span></li>').join('') + '</ul></section>';
+    h += '<section class="block"><div class="row2" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button class="btn dark" id="a-again">' + (g.mode === 'duel' ? 'Revanche' : 'Rejouer') + '</button><button class="btn" id="a-home">Accueil</button></div></section>';
     box.innerHTML = h;
-    replayState = { g, A, rows };
-    const range = $('#rp-range');
-    const draw = () => renderReplay(+range.value);
+    replay = { g, A, rows };
+    const range = $('#rp-range'), draw = () => drawReplay(+range.value);
     range.addEventListener('input', draw);
     $('#rp-prev').addEventListener('click', () => { range.value = Math.max(0, +range.value - 1); draw(); });
     $('#rp-next').addEventListener('click', () => { range.value = Math.min(rows.length, +range.value + 1); draw(); });
-    $('#a-again').addEventListener('click', () => startGame(g.level));
-    $('#a-home').addEventListener('click', goHome);
-    draw();
-    show('analysis');
+    $('#a-again').addEventListener('click', () => g.mode === 'duel' && g.opp ? requestGame({ mode: 'duel', bot: g.opp.id }) : g.mode === 'daily' ? goTab('home') : requestGame({ mode: g.mode === 'free' ? 'free' : 'solo', level: g.level }));
+    $('#a-home').addEventListener('click', () => goTab('home'));
+    draw(); show('review');
   }
-
-  function renderReplay(pos) {
-    const { g, A, rows } = replayState;
-    let board, mv = -1, cls = '', cap;
-    if (pos === 0) { board = toArr(g.puzzle); cap = '<span class="muted">Position de départ · ' + g.grade.givens + ' chiffres donnés.</span>'; }
+  function drawReplay(pos) {
+    const { g, A, rows } = replay;
+    let board, mv = -1, cls = '', capHtml;
+    if (pos === 0) { board = toArr(g.puzzle); capHtml = '<span class="muted">Position de départ · ' + g.grade.givens + ' chiffres donnés.</span>'; }
     else {
-      const r = rows[pos - 1];
-      board = r.b.slice(); board[r.m.c] = r.m.v; mv = r.m.c; cls = r.cls;
+      const r = rows[pos - 1]; board = r.b.slice(); board[r.m.c] = r.m.v; mv = r.m.c; cls = r.cls;
       const d = describeMove(r);
-      cap = '<b class="t-' + cls + '">' + CLS[cls].name + '</b> · ' + d.head + '<br><span class="muted">' + d.body + '</span>';
+      capHtml = '<span class="sym c-' + cls + '">' + CLS[cls].sym + '</span><b class="t-' + cls + '">' + CLS[cls].name + '</b> · ' + d.head + '<br><span class="muted">' + d.body + '</span>';
     }
     $('#rp-board').innerHTML = miniBoard(board, A.solA, g.puzzle, mv, cls);
-    $('#rp-cap').innerHTML = cap;
+    $('#rp-cap').innerHTML = capHtml;
   }
 
-  // ---------- HISTORY ----------
-  function eloChart(hist) {
-    const vals = [1200].concat(hist.filter(g => g.ranked).map(g => g.eloAfter));
-    if (vals.length < 2) return '<p class="empty">Joue une partie classée pour voir ta courbe Elo.</p>';
-    const W = 340, H = 170, pl = 36, pr = 8, pt = 10, pb = 20;
-    let mn = Math.min(...vals), mx = Math.max(...vals);
-    mn = Math.floor((mn - 20) / 50) * 50; mx = Math.ceil((mx + 20) / 50) * 50;
-    const x = k => pl + k * (W - pl - pr) / (vals.length - 1);
-    const y = v => pt + (H - pt - pb) * (1 - (v - mn) / (mx - mn));
-    let s = '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Évolution de ton Elo">';
-    const stepV = (mx - mn) > 400 ? 200 : (mx - mn) > 200 ? 100 : 50;
-    for (let v = mn; v <= mx; v += stepV) s += '<line class="grid" x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y(v) + '" y2="' + y(v) + '"/><text x="' + (pl - 5) + '" y="' + (y(v) + 3) + '" text-anchor="end">' + v + '</text>';
-    const d = vals.map((v, k) => (k ? 'L' : 'M') + x(k).toFixed(1) + ' ' + y(v).toFixed(1)).join('');
-    s += '<path d="' + d + 'L' + x(vals.length - 1).toFixed(1) + ' ' + y(mn) + 'L' + pl + ' ' + y(mn) + 'Z" fill="var(--accent-soft)" opacity=".7"/>';
-    s += '<path d="' + d + '" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>';
-    const lx = x(vals.length - 1), ly = y(vals[vals.length - 1]);
-    s += '<circle cx="' + lx + '" cy="' + ly + '" r="4" fill="var(--accent)"/><text x="' + (lx - 6) + '" y="' + (ly - 8) + '" text-anchor="end" style="fill:var(--ink);font-weight:600">' + vals[vals.length - 1] + '</text>';
-    s += '<text x="' + pl + '" y="' + (H - 4) + '">début</text><text x="' + (W - pr) + '" y="' + (H - 4) + '" text-anchor="end">' + (vals.length - 1) + ' parties classées</text>';
-    return s + '</svg>';
-  }
+  // ================= ticker =================
+  let lastTick = performance.now(), saveTick = 0;
+  setInterval(() => {
+    const now = performance.now(), dt = now - lastTick; lastTick = now;
+    const visible = document.visibilityState === 'visible' && $('#modal').hidden;
+    if (screen === 'game' && cur && !cur.finished && !paused && visible) {
+      cur.elapsed += dt; renderTime();
+      if (cur.mode === 'duel') { renderDuel(); if (botProgress(cur) >= cur.bot.empties) { endGame(false, { reason: 'bot' }); return; } }
+      if (now - saveTick > 5000) { saveTick = now; saveCur(); }
+    }
+    if (screen === 'rush' && rush && rush.running && visible && !rush.lock) {
+      rush.left -= dt;
+      if (rush.left <= 0) { rush.left = 0; renderRush(); endRush(); return; }
+      const s = Math.ceil(rush.left / 1000);
+      $('#r-clock').textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+      $('#r-clock').classList.toggle('low', s <= 20);
+    }
+  }, 200);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && screen === 'game' && cur && !cur.finished) setPause(true); });
 
-  function renderHistory() {
-    const hist = profile.history;
-    const wins = hist.filter(g => g.won).length;
-    let h = '<div class="a-head"><span class="eyebrow">' + rankTitle(profile.elo) + '</span><h1 class="num">' + profile.elo + ' Elo</h1></div>';
-    h += '<div class="tiles"><div class="tile"><span class="k">Record</span><span class="v num">' + profile.peak + '</span></div><div class="tile"><span class="k">Parties</span><span class="v num">' + hist.length + '</span><span class="s">' + profile.rankedGames + ' classées</span></div><div class="tile"><span class="k">Victoires</span><span class="v num">' + (hist.length ? Math.round(100 * wins / hist.length) : 0) + ' %</span></div></div>';
-    h += '<section class="block"><h2>Courbe Elo</h2>' + eloChart(hist) + '</section>';
-    h += '<section class="block"><h2>Par difficulté</h2><table class="table"><thead><tr><th>Niveau</th><th class="r">Parties</th><th class="r">Vict.</th><th class="r">Meilleur</th><th class="r">Moyen</th></tr></thead><tbody>' +
-      LV.map((L, k) => {
-        const p = hist.filter(g => g.level === k), w = p.filter(g => g.won);
-        const best = w.length ? fmt(Math.min(...w.map(g => g.time))) : '—';
-        const mean = w.length ? fmt(w.reduce((a, g) => a + g.time, 0) / w.length) : '—';
-        return '<tr><td>' + L.name + '</td><td class="r">' + p.length + '</td><td class="r">' + w.length + '</td><td class="r">' + best + '</td><td class="r">' + mean + '</td></tr>';
-      }).join('') + '</tbody></table></section>';
-    h += '<section class="block"><h2>Dernières parties <small>analyse disponible pour les 30 dernières</small></h2><div class="glist">';
-    if (!hist.length) h += '<p class="empty">Aucune partie terminée pour l\'instant.</p>';
-    hist.slice().reverse().slice(0, 60).forEach(g => {
-      const has = !!games[g.id];
-      h += '<button class="grow-btn" data-id="' + g.id + '"' + (has ? '' : ' disabled') + '><span class="a">' + LV[g.level].name + ' · ' + (g.won ? 'victoire' : 'défaite') + '</span><span class="b">' + dateStr(g.date) + ' · ' + fmt(g.time) + ' · ' + g.mistakes + ' err.' + (has ? ' · analyse →' : '') + '</span><span class="c ' + (g.delta > 0 ? 'up' : g.delta < 0 ? 'down' : 'muted') + '">' + (g.ranked ? (g.delta > 0 ? '+' : '') + g.delta : 'libre') + '</span></button>';
-    });
-    h += '</div></section>';
-    h += '<section class="block"><button class="btn danger" id="h-reset">Réinitialiser le profil</button></section>';
-    const box = $('#history'); box.innerHTML = h;
-    box.querySelectorAll('.grow-btn[data-id]').forEach(b => b.addEventListener('click', () => openAnalysis(b.dataset.id)));
-    $('#h-reset').addEventListener('click', () => modal('<h2>Réinitialiser ?</h2><p>Ton Elo repart à 1200 et tout l\'historique est effacé. Impossible d\'annuler.</p><div class="btns"><button class="btn danger" data-act="ok">Tout effacer</button><button class="btn" data-act="no">Annuler</button></div>',
-      { ok: () => { profile = newProfile(); games = {}; cur = null; saveProfile(); saveCur(); renderHistory(); toast('Profil réinitialisé'); } }));
-    show('history');
+  // ================= wiring =================
+  function backFrom(s) {
+    if (s === 'game') { saveCur(); goTab(cur && cur.mode === 'duel' ? 'play' : tab); }
+    else if (s === 'problem') goTab(prob && prob.opts.mode === 'practice' ? 'learn' : prob && prob.opts.mode === 'daily' ? 'home' : 'puzzles');
+    else if (s === 'rush') { if (rush && rush.running) modal('<h2>Quitter le Rush ?</h2><p>Ton score actuel (' + rush.score + ') sera enregistré.</p><div class="btns"><button class="btn danger" data-act="ok">Terminer maintenant</button><button class="btn" data-act="no">Continuer</button></div>', { ok: endRush }); else goTab('puzzles'); }
+    else if (s === 'lesson') goTab('learn');
+    else if (s === 'review') goTab(tab);
+    else goTab('home');
   }
-
-  // ---------- wiring ----------
   function wire() {
-    buildBoard();
-    $('#mode-ranked').addEventListener('click', () => { ranked = true; store.set('ranked', true); renderHome(); });
-    $('#mode-free').addEventListener('click', () => { ranked = false; store.set('ranked', false); renderHome(); });
-    $('#btn-play').addEventListener('click', () => requestGame(recommended(profile.elo)));
-    $('#btn-resume').addEventListener('click', openGame);
-    $('#btn-history').addEventListener('click', renderHistory);
-    $('#g-back').addEventListener('click', () => { saveCur(); goHome(); });
+    gcells = makeBoard($('#board'), selectCell); gkeys = makePad($('#pad'), inputDigit);
+    pcells = makeBoard($('#pboard'), i => { if (!prob || prob.answered) return; prob.sel = i; renderProblem(); }); pkeys = makePad($('#ppad'), problemDigit);
+    rcells = makeBoard($('#rboard'), i => { if (!rush || !rush.running) return; rush.sel = i; renderRush(); }); rkeys = makePad($('#rpad'), rushDigit);
+    document.querySelectorAll('#tabbar button').forEach(b => b.addEventListener('click', () => goTab(b.dataset.tab)));
+    $('#g-back').addEventListener('click', () => backFrom('game'));
     $('#g-pause').addEventListener('click', () => setPause(!paused));
     $('#v-resume').addEventListener('click', () => setPause(false));
-    $('#v-abandon').addEventListener('click', () => modal('<h2>Abandonner ?</h2><p>' + (cur && cur.ranked ? 'La partie compte comme une défaite et ton Elo baisse.' : 'La partie sera enregistrée comme une défaite.') + '</p><div class="btns"><button class="btn danger" data-act="ok">Abandonner</button><button class="btn" data-act="no">Continuer à jouer</button></div>',
-      { ok: () => { paused = false; $('#veil').hidden = true; endGame(false); } }));
+    $('#v-abandon').addEventListener('click', () => modal('<h2>Abandonner ?</h2><p>' + (cur && (cur.mode === 'solo' || cur.mode === 'duel') ? 'La partie compte comme une défaite et ton Elo baisse.' : 'La partie sera enregistrée comme une défaite.') + '</p><div class="btns"><button class="btn danger" data-act="ok">Abandonner</button><button class="btn" data-act="no">Continuer à jouer</button></div>',
+      { ok: () => { paused = false; $('#veil').hidden = true; endGame(false, { reason: 'abandon' }); } }));
     $('#t-undo').addEventListener('click', undo);
     $('#t-erase').addEventListener('click', erase);
     $('#t-notes').addEventListener('click', toggleNotes);
     $('#t-hint').addEventListener('click', useHint);
-    $('#hintclose').addEventListener('click', () => { hideHint(); if (cur) renderBoard(); });
-    $('#a-back').addEventListener('click', goHome);
-    $('#h-back').addEventListener('click', goHome);
+    $('#hintclose').addEventListener('click', () => { hideHint(); if (cur) renderGame(); });
+    $('#p-back').addEventListener('click', () => backFrom('problem'));
+    $('#p-cands').addEventListener('click', () => { if (!prob) return; prob.showCands = !prob.showCands; profile.cands = prob.showCands; saveProfile(); renderProblem(); });
+    $('#r-back').addEventListener('click', () => backFrom('rush'));
+    $('#r-cands').addEventListener('click', () => { if (!rush) return; rush.cands = !rush.cands; profile.rushCands = rush.cands; renderRush(); });
+    $('#a-back').addEventListener('click', () => backFrom('review'));
+    $('#l-back').addEventListener('click', () => backFrom('lesson'));
     document.addEventListener('keydown', e => {
-      if (screen !== 'game' || !cur || !$('#modal').hidden) return;
-      if (e.key >= '1' && e.key <= '9') { inputDigit(+e.key); e.preventDefault(); }
+      if (!$('#modal').hidden) return;
+      const dig = e.key >= '1' && e.key <= '9' ? +e.key : 0;
+      if (screen === 'problem' && dig) { problemDigit(dig); return; }
+      if (screen === 'rush' && dig) { rushDigit(dig); return; }
+      if (screen !== 'game' || !cur) return;
+      if (dig) { inputDigit(dig); e.preventDefault(); }
       else if (e.key === 'Backspace' || e.key === 'Delete' || e.key === '0') { erase(); e.preventDefault(); }
       else if (e.key === 'n' || e.key === 'N') toggleNotes();
       else if ((e.key === 'z' || e.key === 'Z') && (e.ctrlKey || e.metaKey)) { undo(); e.preventDefault(); }
       else if (e.key.indexOf('Arrow') === 0) {
-        let s = cur.selected < 0 ? 40 : cur.selected;
-        const r = E.ROW[s], c = E.COL[s];
+        let s = cur.selected < 0 ? 40 : cur.selected; const r = E.ROW[s], c = E.COL[s];
         if (e.key === 'ArrowUp') s = ((r + 8) % 9) * 9 + c;
         if (e.key === 'ArrowDown') s = ((r + 1) % 9) * 9 + c;
         if (e.key === 'ArrowLeft') s = r * 9 + (c + 8) % 9;
         if (e.key === 'ArrowRight') s = r * 9 + (c + 1) % 9;
-        select(s); e.preventDefault();
+        selectCell(s); e.preventDefault();
       }
     });
   }
 
-  // Hooks used by the Android wrapper (back button, app sent to background)
+  // Android wrapper hooks
   window.__androidBack = function () {
     if (!$('#loading').hidden) return true;
-    if (!$('#modal').hidden) { closeModal(); if (screen === 'game' && !cur) goHome(); return true; }
-    if (screen === 'game') { if (paused) { setPause(false); return true; } saveCur(); goHome(); return true; }
-    if (screen !== 'home') { goHome(); return true; }
-    return false;
+    if (!$('#modal').hidden) { closeModal(); if (screen === 'game' && !cur) goTab('home'); return true; }
+    if (screen === 'game' && paused) { setPause(false); return true; }
+    if (screen === 'home') return false;
+    backFrom(screen); return true;
   };
   window.__androidPause = function () {
     if (screen === 'game' && cur && !cur.finished) setPause(true);
-    saveCur();
+    saveCur(); saveProfile();
   };
 
   function start(data) {
-    if (data && data.profile && !store.get('profile', null)) { profile = data.profile; games = data.games || {}; cur = data.cur || null; ranked = data.ranked !== false; }
-    wire();
-    renderHome();
-    show('home');
+    if (data && data.profile && !store.get('profile', null)) { profile = migrate(data.profile); games = data.games || {}; cur = data.cur || null; ranked = data.ranked !== false; }
+    wire(); goTab('home');
   }
   if (window.claude && window.claude.hot && window.claude.hot.ready) window.claude.hot.ready(start);
   else start((window.claude && window.claude.hot && window.claude.hot.data) || {});
